@@ -1,7 +1,5 @@
-import Image from 'next/image'
-import Hero from './Hero';
-import Body from './Body';
-import Footer from './components/Footer';
+import Hero from "./components/Hero"
+import Body from "./Body"
 
 /**
  * 
@@ -9,12 +7,10 @@ import Footer from './components/Footer';
  */
 export default function Home() {
   return (
-    <main>
+    <main className="">
       <Hero />
-
       <Body />
-      
-      <Footer />
+
     </main>
   )
 }

@@ -2,22 +2,21 @@ import Link from "next/link";
 
 export default function Navigation() {
     return (
-        <nav class="px-12 py-8 grid grid-cols-2">
-            <div className="Navigation-bar-SFU-Icon">
-                {/* Logo */}
-                <CreateLink link={"./Home"} linkText={"Click Here"} />
+        <nav className="md:flex md:justify-between md:absolute md:w-screen md:inset-y-10 text-[18px] font-medium">
+            <div className="px-20"> 
+                <Link href={"./"} className="">{"Logo"}</Link>
             </div>
 
-            <div className="Navigation-bar-related">
+            <div className="px-14">
                 <CreateLink link={"./"} linkText={"Events"} />
                 <CreateLink link={"./"} linkText={"Strava Club"} />
                 <CreateLink link={"./"} linkText={"Executives"} />
-                <CreateLink link={"./"} linkText={"About"} />
+                <CreateLink link={"./About"} linkText={"About"} />
             </div>
         </nav>
     )
 }
 
 function CreateLink({link, linkText}) {
-    return <Link href={link} class="p-8">{linkText}</Link>
+    return <Link href={link} className="px-6">{linkText}</Link>
 }
