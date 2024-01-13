@@ -7,7 +7,7 @@ import Body from "./Body"
  */
 export default function Home() {
   return (
-    <main className="">
+    <main className="font-mono">
       <Hero />
       <Body />
 

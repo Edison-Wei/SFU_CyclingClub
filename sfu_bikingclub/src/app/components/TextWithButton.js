@@ -1,4 +1,3 @@
-import Link from "next/link";
 /**
  * Creates an Text secrtion with Title, Text/Text array, Link to place
  * Title: Title of that section
@@ -7,12 +6,12 @@ import Link from "next/link";
  */
 export default function TextWithButton({ title, text, stext, link, linkName}) {
     return (
-            <div className="p-10 bg-red-200 grid gap-2 items-center" >
-                <SmallText stext={stext} />
-                <TitleSection title={title} />
-                <TextSection text={text}/>
-                <LinkSection link={link} linkName={linkName}/>
-            </div>
+        <div className="p-10 grid gap-2 items-center place-items-center" >
+            <SmallText stext={stext} />
+            <TitleSection title={title} />
+            <TextSection text={text}/>
+            <LinkSection link={link} linkName={linkName}/>
+        </div>
     )
 }
 
@@ -54,7 +53,7 @@ function TextSection({text}) {
 function LinkSection({link, linkName}) {
     return (
         <div className="Text-With-Button-Link">
-            <Link href={link}>{linkName}</Link>
+            <a href={link}>{linkName}</a>
         </div>
     )
 }

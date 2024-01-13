@@ -2,21 +2,21 @@ import Link from "next/link";
 
 export default function Navigation() {
     return (
-        <nav className="md:flex md:justify-between md:absolute md:w-screen md:inset-y-10 text-[18px] font-medium">
-            <div className="px-20"> 
+        <>
+            <div className="md:px-16"> 
                 <Link href={"./"} className="">{"Logo"}</Link>
             </div>
 
-            <div className="px-14">
+            <div className="md:px-10">
                 <CreateLink link={"./"} linkText={"Events"} />
-                <CreateLink link={"./"} linkText={"Strava Club"} />
+                <a href={"https://www.strava.com/clubs/1079967"} className={"md:px-4"}>Strava</a>
                 <CreateLink link={"./"} linkText={"Executives"} />
                 <CreateLink link={"./About"} linkText={"About"} />
             </div>
-        </nav>
+        </>
     )
 }
 
 function CreateLink({link, linkText}) {
-    return <Link href={link} className="px-6">{linkText}</Link>
+    return <Link href={link} className="md:px-4">{linkText}</Link>
 }
