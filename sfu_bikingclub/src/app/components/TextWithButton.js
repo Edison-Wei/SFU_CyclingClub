@@ -1,5 +1,5 @@
 /**
- * Creates an Text secrtion with Title, Text/Text array, Link to place
+ * Creates an Text section with Title, Text/Text array, Link to place
  * Title: Title of that section
  * @param {title, text, link, linkName} param0 
  * @returns 
