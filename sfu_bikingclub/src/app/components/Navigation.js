@@ -8,9 +8,9 @@ export default function Navigation() {
             </div>
 
             <div className="md:px-10">
-                <CreateLink link={"./"} linkText={"Events"} />
+                <CreateLink link={"./Events"} linkText={"Events"} />
                 <a href={"https://www.strava.com/clubs/1079967"} className={"md:px-4"}>Strava</a>
-                <CreateLink link={"./"} linkText={"Executives"} />
+                <CreateLink link={"./Executives"} linkText={"Executives"} />
                 <CreateLink link={"./About"} linkText={"About"} />
             </div>
         </>
