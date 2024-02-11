@@ -3,8 +3,10 @@ import Link from "next/link";
 export default function Navigation() {
     return (
         <>
-            <div className="md:px-16"> 
-                <Link href={"./"} className="">{"Logo"}</Link>
+           <div className="md:px-16"> 
+                    <a>
+                        <img src="./images/logo.jpg" style={{ width: '50px', height: 'auto' }} />
+                    </a>
             </div>
 
             <div className="md:px-10">

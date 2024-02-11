@@ -1,6 +1,6 @@
 // 
 
-export default function Footer() {
+export default function Header() {
 
     return (
         <div className="w-screen bg-white-500">
