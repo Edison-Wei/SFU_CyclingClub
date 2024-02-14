@@ -5,7 +5,7 @@ export default function Navigation() {
         <>
            <div className="md:px-16"> 
                     <a>
-                        <img src="./images/logo.jpg" style={{ width: '50px', height: 'auto' }} />
+                        <img src="./images/logo.jpg" alt= "logo" className={"md:px-4"} />
                     </a>
             </div>
 
