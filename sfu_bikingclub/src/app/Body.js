@@ -1,6 +1,8 @@
 "use client"
 import TextWithButton from "./components/TextWithButton"
+import SmallText from "./components/TextWithButton"
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const DATA_SOURCE_URL = "http://jsonplaceholder.typicode.com/todos";
 
@@ -37,8 +39,12 @@ export default function Body() {
                 <div className="">
                     <TextWithButton title={"Upcoming Rides!"} text={"Come join us on any of our upcoming rides!"} stext={""} link={"https://www.strava.com/clubs/1079967"} linkName={"Strava"}></TextWithButton>
                 </div>
-                <div>
-                    Strava club shown here
+            
+                <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px] bg-black text-white">
+                    <div className="">
+                        <SmallText stext={"Map Here"} />
+                        <CreateLink link={"./Events"} linkText={"Make a Suggestion"} />
+                    </div>
                 </div>
             </div>
             <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px]">
@@ -59,4 +65,9 @@ export default function Body() {
             </div>
         </div>
     )
+}
+
+
+function CreateLink({link, linkText}) {
+    return <Link href={link} className="md:px-4">{linkText}</Link>
 }
