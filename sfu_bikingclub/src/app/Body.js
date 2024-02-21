@@ -61,6 +61,7 @@ export default function Body() {
                     alt={"Group photo of the Cycling Club (Once it happens)"} 
                     className="h-auto w-auto"/>
                 </div>
+                <p id="joinInformation"/>
                 <TextWithButton title={"Join Our Riding Community"} text={"Hello World!"} stext={"Ready To Join the SFU Cycling Club?"} link={"https://www.sfu.ca/"} linkName={"Discord"} />
             </div>
         </div>
