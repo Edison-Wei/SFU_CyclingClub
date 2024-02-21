@@ -43,7 +43,7 @@ export default function Body() {
                 <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px] bg-black text-white">
                     <div className="">
                         <SmallText stext={"Map Here"} />
-                        <CreateLink link={"./Events"} linkText={"Make a Suggestion"} />
+                        <CreateLink link={"./Suggestion"} linkText={"Make a Suggestion"} />
                     </div>
                 </div>
             </div>
