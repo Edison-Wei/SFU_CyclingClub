@@ -15,7 +15,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="font-Inter" suppressHydrationWarning={true}>
         <main> {children} </main>
-        <Header />
         <Footer />
       </body>
     </html>

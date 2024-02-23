@@ -25,3 +25,12 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+
+/* sizing of map container */
+.leaflet-container {
+  height: 75vh;
+  width: 100vh;
+}
+
+
+

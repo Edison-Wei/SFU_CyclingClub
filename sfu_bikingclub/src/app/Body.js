@@ -3,6 +3,7 @@ import TextWithButton from "./components/TextWithButton"
 import SmallText from "./components/TextWithButton"
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Map from "./components/Map";
 
 const DATA_SOURCE_URL = "http://jsonplaceholder.typicode.com/todos";
 
@@ -43,6 +44,7 @@ export default function Body() {
                 <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px] bg-black text-white">
                     <div className="">
                         <SmallText stext={"Map Here"} />
+                        <Map/>
                         <CreateLink link={"./Suggestion"} linkText={"Make a Suggestion"} />
                     </div>
                 </div>
