@@ -1,6 +1,6 @@
-import Hero from "./components/Hero"
+import Hero from "@/components/Hero"
 import Body from "./Body"
-import Header from './components/Header'
+import Header from "../components/Header"
 
 /**
  * 
