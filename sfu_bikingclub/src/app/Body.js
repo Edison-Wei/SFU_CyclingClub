@@ -1,37 +1,9 @@
-"use client"
-import TextWithButton from "./components/TextWithButton"
-import SmallText from "./components/TextWithButton"
-import { useEffect, useState } from "react";
+
+import TextWithButton from "../components/TextWithButton";
+import { SmallText } from "../components/TextWithButton";
 import Link from "next/link";
 
-const DATA_SOURCE_URL = "http://jsonplaceholder.typicode.com/todos";
-
-// This for local things
-async function fetchDemoData() {
-    try {
-        const res = await axios.get(
-            "http://jsonplaceholder.typicode.com/todos"
-        );
-        console.log(res)
-        return res.json();
-    } catch(error) {
-        console.error("Error: ", error);
-        return null;
-    }
-}
-
 export default function Body() {
-    // const [data, setData] = useState();
-
-    // // Just fetch is for actual api calls outside
-    // useEffect(() => {
-    //     fetch(DATA_SOURCE_URL).then((res) => {
-    //         return res.json()
-    //     }).then((data) => {
-    //         console.log(data);
-    //     });
-    // }, []);
-    // console.log(data);
 
     return (
         <div className="">

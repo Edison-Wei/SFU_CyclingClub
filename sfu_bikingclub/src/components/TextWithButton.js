@@ -15,7 +15,7 @@ export default function TextWithButton({ title, text, stext, link, linkName}) {
     )
 }
 
-function SmallText({ stext }) {
+export function SmallText({ stext }) {
     return (
         <div className="text-[15px]">
             {stext}
