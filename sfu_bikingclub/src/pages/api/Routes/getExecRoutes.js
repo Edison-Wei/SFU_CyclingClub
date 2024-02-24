@@ -18,6 +18,7 @@ export default async function handler(req, res) {
     try {
         const connection = await mysql.createConnection(connectionParams);
 
+        //Change
         let get_exp_query = "SELECT * FROM ClubMemberActivity.StravaRides";
 
         let values = [];
