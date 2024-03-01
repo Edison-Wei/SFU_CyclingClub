@@ -15,7 +15,7 @@ export async function GET(request) {
     try {
         const connection = await mysql.createConnection(connectionParams);
 
-        let get_exp_query = "SELECT * FROM CharityRides.CharityRide";
+        let get_exp_query = "SELECT * FROM Club.StravaRides";
 
         let values = [];
 

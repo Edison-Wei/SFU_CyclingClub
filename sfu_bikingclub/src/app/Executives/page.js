@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 async function fetchcClubActivity() {
     try  {
-        const response = await axios.get("/api/charityRides/getClubActivity");
+        const response = await axios.get("/api/ClubActivity/getStravaRides");
         return response.data;
     } catch(error) {
         console.error("Error fetching Club Activity: " + error)
@@ -21,12 +21,11 @@ export default function Executives() {
                 setActivity(res);
         })
     }, []);
-
     
 
     return (
         <div className="">
-            
+
         </div>
     );
 }

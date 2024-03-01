@@ -7,6 +7,7 @@ import Header from "../components/Header"
  * @returns 
  */
 export default function Home() {
+  // dark:invert-[.95] dark:hue-rotate-180
   return (
     <main className="font-mono">
       <Header />

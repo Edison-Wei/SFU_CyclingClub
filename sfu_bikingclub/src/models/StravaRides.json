@@ -1,0 +1,18 @@
+[
+    {
+      "first_name": "Test",
+      "last_name": "Tester",
+      "id": 1,
+      "title": "some title",
+      "distance": 123,
+      "date": "2024-02-06T08:00:00.000Z" // Would not be a string but in date format
+    },
+    {
+      "first_name": "Test",
+      "last_name": "testing",
+      "id": 1,
+      "title": "Some title of riding",
+      "distance": 123,
+      "date": "2024-02-06T08:00:00.000Z"
+    }
+]
