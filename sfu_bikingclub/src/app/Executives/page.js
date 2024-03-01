@@ -21,8 +21,7 @@ export default function Executives() {
                 setActivity(res);
         })
     }, []);
-
-    console.log(activity);
+    
 
     return (
         <div className="">

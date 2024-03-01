@@ -7,7 +7,7 @@ let connectionParams = {
     port: parseInt(process.env.port_dev),
     user: process.env.user_dev,
     password: process.env.password_dev,
-    database: process.env.database_Club,
+    database: process.env.database_Club_dev,
 }
 
 export default async function handler(req, res) {
@@ -26,6 +26,7 @@ export default async function handler(req, res) {
 
         connection.end();
         // fields: fields.map(f => f.name)
+        console.log(results);
         res.status(200).json({ results });
 
     } catch (error) {

@@ -7,7 +7,7 @@ let connectionParams = {
     port: parseInt(process.env.port_dev),
     user: process.env.user_dev,
     password: process.env.password_dev,
-    database: process.env.database_dev,
+    database: process.env.database_Route,
 }
 
 export default async function handler(req, res) {
@@ -16,12 +16,16 @@ export default async function handler(req, res) {
     }
 
     try {
+        // Can be changed (Should take the searchParams(URL params)) not 100%
+        const obFrom = request.nextUrl.searchParams.get('searchParams');
+        const dobTo = request.nextUrl.searchParams.get('searchParams');
+
         const connection = await mysql.createConnection(connectionParams);
 
-        //Change
-        let get_exp_query = "SELECT * FROM ClubMemberActivity.StravaRides";
+        let get_exp_query = "SELECT * FROM CyclingRoutes.ExecRoutes";
 
-        let values = [];
+        // Can be used to pass parameters into out sql query
+        let values = [ data1, data2, ...data3];
 
         const [results] = await connection.execute(get_exp_query, values);
 

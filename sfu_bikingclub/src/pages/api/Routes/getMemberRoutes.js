@@ -7,7 +7,7 @@ let connectionParams = {
     port: parseInt(process.env.port_dev),
     user: process.env.user_dev,
     password: process.env.password_dev,
-    database: process.env.database_dev,
+    database: process.env.database_Route,
 }
 
 export default async function handler(req, res) {
@@ -18,8 +18,7 @@ export default async function handler(req, res) {
     try {
         const connection = await mysql.createConnection(connectionParams);
 
-        // Change
-        let get_exp_query = "SELECT * FROM ClubMemberActivity.StravaRides";
+        let get_exp_query = "SELECT * FROM CyclingRoutes.MemberRoutes";
 
         let values = [];
 
