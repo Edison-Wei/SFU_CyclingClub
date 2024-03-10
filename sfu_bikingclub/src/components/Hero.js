@@ -7,7 +7,7 @@ export default function Hero() {
             <div className="absolute w-[550px] md:inset-x-[25%] lg:inset-x-1/4 inset-y-1/2 md:text-[25px] lg:text-[32px] font-semibold text-white">
                 Welcome to SFU Cycling Club
             </div>
-            <div className="md:flex md:justify-between md:absolute md:w-screen md:inset-y-10 text-[12px] md:text-[18px] font-medium">
+            <div className="md:absolute md:w-full md:inset-y-0">
                 <Navigation />
             </div>
         </nav>

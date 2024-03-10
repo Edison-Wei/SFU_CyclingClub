@@ -1,8 +1,8 @@
 export default function Footer() {
 
     return (
-        <div className="w-screen bg-green-500">
+        <footer className="w-full bg-white">
             <p>Made by Edison Wei and Claire Shou</p>
-        </div>
+        </footer>
     )
 }

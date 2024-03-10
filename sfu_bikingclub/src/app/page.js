@@ -2,10 +2,7 @@ import Hero from "@/components/Hero"
 import Body from "./Body"
 import Header from "../components/Header"
 
-/**
- * 
- * @returns 
- */
+
 export default function Home() {
   // dark:invert-[.95] dark:hue-rotate-180
   return (
@@ -13,7 +10,6 @@ export default function Home() {
       <Header />
       <Hero />
       <Body />
-
     </main>
   )
 }
