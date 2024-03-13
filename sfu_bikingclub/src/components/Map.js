@@ -18,10 +18,15 @@ export default function Map() {
     // Define a custom hook to add routing control to the map
     function AddRoutingControl() {
         const map = useMap();
+
+        L.marker([49.2732, -123.1000]).addTo(map)
+        .bindPopup('Meet Here!')
+        .openPopup();
     
         // Add routing control to the map
         L.Routing.control({
         waypoints: waypoints,
+        routeWhileDragging: true
         }).addTo(map);
     
         return null;
