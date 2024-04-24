@@ -17,10 +17,10 @@ export default function Navigation() {
             </div>
 
             <div className="md:px-10 text-[12px] md:text-[20px] font-[550]">
-                <a href={"https://www.strava.com/clubs/1079967"} className={"md:px-4"}>Strava</a>
+                <CreateLink link={"./About"} linkText={"About"} />
                 <CreateLink link={"./Executives"} linkText={"Executives"} />
                 <CreateLink link={"./Blog"} linkText={"Cycling Blog"} />
-                <CreateLink link={"./About"} linkText={"About"} />
+                <a href={"https://www.strava.com/clubs/1079967"} className={"md:px-4"}>Strava</a>
             </div>
         </nav>
     )
