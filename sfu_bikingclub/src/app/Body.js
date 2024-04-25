@@ -3,8 +3,17 @@ import TextWithButton from "../components/TextWithButton";
 import { SmallText } from "../components/TextWithButton";
 import Link from "next/link";
 import Map from "../components/Map";
+import { useMemo } from "react";
+import dynamic from "next/dynamic";
 
 export default function Body() {
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/Map'),
+        {
+            loading: () => <p>Map is Loading</p>,
+            ssr: false
+        }
+    ), []);
 
     return (
         <div className="">
@@ -16,7 +25,7 @@ export default function Body() {
                 <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px] bg-black text-white">
                     <div className="">
                         <SmallText stext={"Upcoming Ride"} />
-                        <Map/>
+                        <Map position={[49.246292, -123.116226]} zoom={11.5} />
                         <CreateLink link={"./Suggestion"} linkText={"Make a Suggestion"} />
                     </div>
                 </div>
