@@ -23,10 +23,10 @@ export default function Body() {
             </div>
             <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px]">
                 <div>
-                    Previous Rides
+                    Safety Information
                 </div>
                 <div>
-                    Thing 2
+                    Gear to bring on rides
                 </div>
             </div>
             <div className="flex justify-around md:h-[400px] lg:h-[600px] xl:h-[850px] items-center bg-black text-white">
