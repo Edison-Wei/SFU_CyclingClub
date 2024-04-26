@@ -6,11 +6,12 @@ import Link from "next/link";
 export default function Header() {
 
     return (
-        <nav className="md:flex md:justify-between md:w-full">
-          <div className="flex-none w-96 bg-white-500 md:text-[20px] font-[550] hover:text-gray-500">
+        <nav className="md:flex md:justify-between md:w-full" id = "Header">
+          <div className="flex-none w-96 bg-white-500 md:text-[15px] font-[550] hover:text-gray-500">
             <Link href="#joinInformation">JOIN US!</Link>
           </div>
-          <div className="flex-1 md:px-10 text-[12px] md:text-[20px] font-[550] flex justify-end">
+          <div className="flex-1 md:px-10 text-[12px] md:text-[15px] font-[550] flex justify-end">
+            <CreateLink link={"./"} linkText={"Home"} />
             <CreateLink link={"./About"} linkText={"About"} />
             <CreateLink link={"./Executives"} linkText={"Executives"} />
             <CreateLink link={"./Blog"} linkText={"Blog"} />
