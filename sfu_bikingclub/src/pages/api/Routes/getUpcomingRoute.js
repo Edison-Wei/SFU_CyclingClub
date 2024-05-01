@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import connectionCredentials from '@/pages/MysqlConnection/dbConnection';
+import connectionCredentials from '../../../app/utils/dbConnection';
 
 export default async function handler(req, res) {
     if (req.method !== "GET") {

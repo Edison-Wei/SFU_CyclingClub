@@ -76,7 +76,6 @@ export default function Map({ geojsonData }) {
 // geojsonData.features[0].geometry.coordinates[0][0][0]
 // geojsonData.features[0].geometry.coordinates[0][0][1]
   
-
   return (
     <div ref={containerRef} className="md:h-[40vh] w-[45vh] lg:h-[75vh] lg:w-[100vh]">
       <LazyMapContainer center={[49.246292, -123.116226]} zoom={11.5} size={{width: "100", height: "100"}} className="h-full w-full z-0">
@@ -86,7 +85,7 @@ export default function Map({ geojsonData }) {
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <AddPopUp lat={49.2732} long={-123.1000} />
-        {/* <AddRoute /> */}
+        {/* <AddRoute />  Both this and GeoJSON work*/}
         <GeoJSON data={geojsonTester} style={{color: "black"}} />
       </LazyMapContainer>
     </div>

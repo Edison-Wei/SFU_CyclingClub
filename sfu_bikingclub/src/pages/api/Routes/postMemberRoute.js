@@ -1,4 +1,4 @@
-import connectionCredentials from '@/pages/MysqlConnection/dbConnection';
+import connectionCredentials from '../../../app/utils/dbConnection';
 import mysql from 'mysql2/promise';
 import { NextResponse, NextRequest } from "next/server";
 

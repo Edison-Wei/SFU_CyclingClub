@@ -3,7 +3,6 @@ import Hero from "@/components/Hero"
 import Header from "../components/Header"
 import TextWithButton from "../components/TextWithButton";
 import { SmallText, CreateLink } from "../components/TextWithButton";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
@@ -37,18 +36,13 @@ export default function Home() {
     <div className="">
       <Header />
       <Hero />
-      <div className="">
+      <div className="w-full h-full">
         <div className="flex justify-around items-center md:h-[400px lg:h-[600px] xl:h-[800px] bg-black text-white">
-          <div className="">
-            <TextWithButton title={"Upcoming Rides!"} text={"Come join us on any of our upcoming rides!"} stext={""} link={"https://www.strava.com/clubs/1079967"} linkName={"Strava"}></TextWithButton>
-          </div>
-
-          <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px] bg-black text-white">
-            <div className="">
-              <SmallText stext={"Upcoming Ride"} />
-              <Map />
-              <CreateLink link={"./Suggestion"} linkText={"Make a Suggestion"} />
-            </div>
+          <TextWithButton title={"Upcoming Rides!"} text={"Come join us on any of our upcoming rides!"} stext={""} link={"https://www.strava.com/clubs/1079967"} linkName={"Strava"} />
+          <div className="flex flex-col justify-evenly md:h-[400px] lg:h-[600px] xl:h-[800px] bg-black text-white">
+            <SmallText stext={"Upcoming Ride"} />
+            <Map />
+            <CreateLink link={"./Suggestion"} linkText={"Make a Suggestion"} />
           </div>
         </div>
         <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px]">
