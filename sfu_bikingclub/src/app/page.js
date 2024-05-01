@@ -2,23 +2,43 @@
 import Hero from "@/components/Hero"
 import Header from "../components/Header"
 import TextWithButton from "../components/TextWithButton";
-import { SmallText } from "../components/TextWithButton";
+import { SmallText, CreateLink } from "../components/TextWithButton";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import axios from "axios";
+
+async function fetchUpcommingRoute() {
+  try {
+    const currentDate = new Date().toISOString()
+    const res = await axios.get(`/api/Routes/getUpcomingRoute?currentDate=${currentDate.slice(0,10)}`);
+
+    return res.data;
+  } catch (error) {
+    console.error("Failed fetch on UpcomingRoute: ", error);
+
+    return {};
+  }
+}
 
 
 export default function Home() {
+  const [route, setRoute] = useState({});
+  const Map = dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Map is Loading</p> });
 
-  const Mappane = dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Map is Loading</p> });
+  useEffect(() => {
+    fetchUpcommingRoute().then(res => setRoute(res));
+  }, []);
+
+  // console.log(route);
 
   // dark:invert-[.95] dark:hue-rotate-180
   return (
-    <main className="font-mono">
+    <div className="">
       <Header />
       <Hero />
       <div className="">
-        <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px] bg-black text-white">
+        <div className="flex justify-around items-center md:h-[400px lg:h-[600px] xl:h-[800px] bg-black text-white">
           <div className="">
             <TextWithButton title={"Upcoming Rides!"} text={"Come join us on any of our upcoming rides!"} stext={""} link={"https://www.strava.com/clubs/1079967"} linkName={"Strava"}></TextWithButton>
           </div>
@@ -26,7 +46,7 @@ export default function Home() {
           <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px] bg-black text-white">
             <div className="">
               <SmallText stext={"Upcoming Ride"} />
-              <Mappane />
+              <Map />
               <CreateLink link={"./Suggestion"} linkText={"Make a Suggestion"} />
             </div>
           </div>
@@ -46,13 +66,9 @@ export default function Home() {
               className="h-auto w-auto" />
           </div>
           <p id="joinInformation" />
-          <TextWithButton title={"Join Our Riding Community"} text={"Hello World!"} stext={"Ready To Join the SFU Cycling Club?"} link={"https://www.sfu.ca/"} linkName={"Discord"} />
+          <TextWithButton title={"Ready To Join the SFU Cycling Club?"} text={"Hello World!"} stext={"Join Our Riding Community"} link={"https://www.sfu.ca/"} linkName={"Discord"} />
         </div>
       </div>
-    </main>
+    </div>
   )
-}
-
-function CreateLink({ link, linkText }) {
-  return <Link href={link} className="md:px-4">{linkText}</Link>
 }

@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="font-Inter" suppressHydrationWarning={true}>
+      <body className="font-mono" suppressHydrationWarning={true}>
         <main> {children} </main>
         <Footer />
       </body>

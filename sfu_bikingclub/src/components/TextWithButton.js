@@ -1,32 +1,34 @@
+import Link from "next/link";
+
 /**
  * Creates an Text section with Title, Text/Text array, Link to place
  * Title: Title of that section
- * @param {title, text, link, linkName} param0 
+ * @param {title, text, link, linkText} param0 
  * @returns 
  */
-export default function TextWithButton({ title, text, stext, link, linkName}) {
+export default function TextWithButton({ title, text, stext, link, linkText}) {
     return (
-        <div className="p-10 grid gap-2 items-center place-items-center" >
-            <SmallText stext={stext} />
+        <div className="p-6 grid gap-2 place-items-center" >
             <TitleSection title={title} />
+            <SmallText stext={stext} />
             <TextSection text={text}/>
-            <LinkSection link={link} linkName={linkName}/>
-        </div>
-    )
-}
-
-export function SmallText({ stext }) {
-    return (
-        <div className="text-[15px]">
-            {stext}
+            <CreateLink link={link} linkText={linkText}/>
         </div>
     )
 }
 
 function TitleSection({title}) {
     return (
-        <div className="Text-With-Button-Title">
+        <div className="md:text-[16px] lg:text-[22px]">
             <h1>{title}</h1>
+        </div>
+    )
+}
+
+export function SmallText({ stext }) {
+    return (
+        <div className="md:text-[20px]">
+            {stext}
         </div>
     )
 }
@@ -34,7 +36,7 @@ function TitleSection({title}) {
 function TextSection({text}) {
     function TextPart({textSeperated}) {
         return (
-            <div className="Text-With-Button-TextPart">
+            <div className="md:text-[12px] lg:text-[18px] text-wrap">
                 <p>{textSeperated}</p>
             </div>
         )
@@ -50,10 +52,6 @@ function TextSection({text}) {
 }
 
 
-function LinkSection({link, linkName}) {
-    return (
-        <div className="Text-With-Button-Link">
-            <a href={link}>{linkName}</a>
-        </div>
-    )
-}
+export function CreateLink({ link, linkText }) {
+    return <Link href={link} className="md:px-4">{linkText}</Link>
+  }

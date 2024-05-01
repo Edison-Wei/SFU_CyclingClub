@@ -1,14 +1,6 @@
+import connectionCredentials from '@/pages/MysqlConnection/dbConnection';
 import mysql from 'mysql2/promise';
 import { NextResponse, NextRequest } from "next/server";
-
-// Change all to without the "_dev"
-let connectionParams = {
-    host: process.env.host_dev,
-    port: parseInt(process.env.port_dev),
-    user: process.env.user_dev,
-    password: process.env.password_dev,
-    database: process.env.database_Club_dev,
-}
 
 export default async function handler(req, res) {
     if (req.method !== "GET") {
@@ -16,7 +8,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const connection = await mysql.createConnection(connectionParams);
+        const connection = await mysql.createConnection(connectionCredentials("club"));
 
         let get_exp_query = "SELECT * FROM Club.StravaRides";
 

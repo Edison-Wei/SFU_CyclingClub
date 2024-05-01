@@ -2,6 +2,7 @@
 
 import Navigation from "@/components/Navigation";
 import axios from "axios";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
 async function fetchActiveExecRoutes() {
@@ -26,18 +27,22 @@ async function fetchMemberRoutes() {
 
 
 export default function Dashboard() {
-    const [execRoutes, setExecRoute] = useState([]);
-    const [memberRoutes, setMemberRoutes] = useState([]);
+    const [execRoutes, setExecRoute] = useState({});
+    const [memberRoutes, setMemberRoutes] = useState({});
+    const Map = dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Map is Loading</p> });
 
 
-    // useEffect(() => {
-    //     fetchActiveExecRoutes().then(res => {
-    //         setExecRoute(res);
-    //     })
-    //     fetchMemberRoutes().then(res => {
-    //         setMemberRoutes(res);
-    //     })
-    // }, []);
+    useEffect(() => {
+        fetchActiveExecRoutes().then(res => {
+            setExecRoute(res);
+        })
+        fetchMemberRoutes().then(res => {
+            setMemberRoutes(res);
+        })
+    }, []);
+
+    // console.log(execRoutes);
+    // console.log(memberRoutes);
 
 
     return (
@@ -49,6 +54,7 @@ export default function Dashboard() {
                 </div>
                 <div className="">
                     Map
+                    {/* <Map /> */}
                 </div>
             </div>
         </>
