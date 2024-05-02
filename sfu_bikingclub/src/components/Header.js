@@ -1,5 +1,3 @@
-
-
 import Link from "next/link";
 
 
@@ -11,7 +9,7 @@ export default function Header() {
             <CreateLink link={"./"} linkText={"Home"} />
             <CreateLink link={"./About"} linkText={"About"} />
             <CreateLink link={"./Executives"} linkText={"Executives"} />
-            <CreateLink link={"./Blog"} linkText={"Blog"} />
+            <CreateLink link={"./blog/login"} linkText={"Blog"} />
             <a href={"https://www.strava.com/clubs/1079967"} className={"md:px-4 hover:text-gray-500"}>Strava</a>
           </div>
         </nav>

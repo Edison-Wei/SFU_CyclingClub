@@ -1,12 +1,12 @@
 import Header from "@/components/Header";
-import LoginForm from "@/components/LoginForm";
-import UserInfo from "@/components/UserInfo";
+import SignUpForm from "@/components/SignUpForm";
+
 
 export default function Events() {
     return (
         <div className="w-full h-full py-6">
             <Header />
-            <UserInfo />
+            <SignUpForm />
         </div>
     );
 }
