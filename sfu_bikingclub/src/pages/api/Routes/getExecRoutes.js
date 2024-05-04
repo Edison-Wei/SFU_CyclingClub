@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
         let get_exp_query = "SELECT * FROM CyclingRoutes.ExecRoutes";
 
-        // Can be used to pass parameters into out sql query
+        // Can be used to pass parameters into our sql query
         // let values = [ data1, data2, ...data3];
         let values = [];
 

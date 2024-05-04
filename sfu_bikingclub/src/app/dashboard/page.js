@@ -25,6 +25,18 @@ async function fetchMemberRoutes() {
     }
 }
 
+async function fetchGeojson(ids) {
+    try {
+      const res = await axios.get(`/api/Routes/getGeojson?interID=${ids[0]}&beginId=${ids[1]}`);
+  
+      return res.data;
+    } catch (error) {
+      console.error("Failed to fetch UpcomingRoute: ", error);
+  
+      return [];
+    }
+  }
+
 
 export default function Dashboard() {
     const [execRoutes, setExecRoute] = useState({});

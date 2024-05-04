@@ -6,30 +6,66 @@ import { SmallText, CreateLink } from "../components/TextWithButton";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
+import { month, weekDay } from "@/components/DateFormat";
 
 async function fetchUpcommingRoute() {
   try {
-    const currentDate = new Date().toISOString()
+    const currentDate = new Date().toISOString();
     const res = await axios.get(`/api/Routes/getUpcomingRoute?currentDate=${currentDate.slice(0,10)}`);
 
-    return res.data;
+    return res.data.routes;
   } catch (error) {
-    console.error("Failed fetch on UpcomingRoute: ", error);
-
-    return {};
+    console.error("Failed to fetch UpcomingRoute: ", error);
+    // Send error data 
+    return [];
   }
 }
 
+function DisplayInformation({ routeInfo }) {
+  const startdate = new Date(routeInfo.start_date);
+
+  return(
+    <div className="grid grid-rows-5 gap-4 p-6 text-[16px] font-semibold">
+      <span className="place-self-center text-[20px] font-bold">
+        {routeInfo.title.toUpperCase()}
+      </span>
+      <div>
+        Difficulty: <span className="font-normal">{routeInfo.difficulty}</span>
+      </div>
+      <div>
+        Distance <span className="font-normal">{routeInfo.distance}</span>km
+      </div>
+      <div>
+        Date: <span className="font-normal">{`${weekDay(startdate.getDay())}, ${month(startdate.getMonth())} ${startdate.getDate()} ${startdate.getFullYear()}`}</span>
+      </div>
+      <div>
+        Time: <span className="font-normal">{`${routeInfo.start_time.slice(0,5)} - ${routeInfo.end_time.slice(0,5)} PST`}</span>
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
-  const [route, setRoute] = useState({});
+  const [routes, setRoutes] = useState();
+  const [selection, setSelection] = useState(0);
   const Map = dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Map is Loading</p> });
 
   useEffect(() => {
-    fetchUpcommingRoute().then(res => setRoute(res));
+    fetchUpcommingRoute().then(res => (
+      setRoutes(res)
+    ));
   }, []);
 
-  // console.log(route);
+  function onclick(info) {
+    switch(info) {
+      case "beginner":
+        setSelection(1);
+        break;
+      default:
+        setSelection(0);
+        break;
+    }
+  }
 
   // dark:invert-[.95] dark:hue-rotate-180
   return (
@@ -37,11 +73,22 @@ export default function Home() {
       <Header />
       <Hero />
       <div className="w-full h-full">
-        <div className="flex justify-around items-center md:h-[400px lg:h-[600px] xl:h-[800px] bg-black text-white">
-          <TextWithButton title={"Upcoming Rides!"} text={"Come join us on any of our upcoming rides!"} stext={""} link={"https://www.strava.com/clubs/1079967"} linkName={"Strava"} />
-          <div className="flex flex-col justify-evenly md:h-[400px] lg:h-[600px] xl:h-[800px] bg-black text-white">
+        <div className="flex justify-around items-center h-screen bg-black text-white">
+          <div className="">
+            <TextWithButton title={"Upcoming Rides!"} text={"Come join us on any of our upcoming rides!"} stext={""} link={"https://www.strava.com/clubs/1079967"} linkName={"Strava"} />
+            <ul className="grid grid-cols-2 w-full justify-items-center">
+              <li>
+                <button onClick={() => onclick("intermediate")} className={`underline hover:text-primary-red`}>Intermediate</button>
+              </li>
+              <li>
+                <button onClick={() => onclick("beginner")} className={`underline hover:text-primary-red`}>Beginner</button>
+              </li>
+            </ul>
+            {routes && <DisplayInformation routeInfo={routes && routes[selection]} />}
+          </div>
+          <div className="flex flex-col justify-evenly h-full bg-black text-white">
             <SmallText stext={"Upcoming Ride"} />
-            <Map />
+            <Map geoData={routes && routes[selection].gpx} id={selection} /> {/* switch between beginnerRoute and intermediateRoute*/}
             <CreateLink link={"./Suggestion"} linkText={"Make a Suggestion"} />
           </div>
         </div>
