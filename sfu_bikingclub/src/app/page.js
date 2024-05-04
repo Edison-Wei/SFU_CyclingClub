@@ -16,8 +16,17 @@ async function fetchUpcommingRoute() {
     return res.data.routes;
   } catch (error) {
     console.error("Failed to fetch UpcomingRoute: ", error);
-    // Send error data 
-    return [];
+    const data = {
+      title: "No active",
+      gpx: "",
+      difficulty: "null",
+      distance: 0,
+      start_date: "2024-01-01",
+      start_time: "00:00",
+      end_time: "00:00"
+    }
+
+    return [data, data];
   }
 }
 

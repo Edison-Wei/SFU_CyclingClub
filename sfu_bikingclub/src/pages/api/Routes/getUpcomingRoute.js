@@ -11,8 +11,8 @@ export default async function handler(req, res) {
 
         const connection = await mysql.createConnection(connectionCredentials("route"));
 
-        const queryIR = `SELECT * FROM CyclingRoutes.ExecRoutes WHERE start_date > ? AND difficulty = "intermediate"`;
-        const queryBR = `SELECT * FROM CyclingRoutes.ExecRoutes WHERE start_date > ? AND difficulty = "beginner"`;
+        const queryIR = `SELECT title, gpx, difficulty, distance, start_date, end_time, start_time FROM CyclingRoutes.ExecRoutes WHERE start_date > ? AND difficulty = "intermediate"`;
+        const queryBR = `SELECT title, gpx, difficulty, distance, start_date, end_time, start_time FROM CyclingRoutes.ExecRoutes WHERE start_date > ? AND difficulty = "beginner"`;
 
         // Can be used to pass parameters into our sql query
         // let values = [ data1, data2, ...data3];
