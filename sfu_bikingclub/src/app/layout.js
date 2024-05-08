@@ -1,4 +1,5 @@
 // import { Inter } from 'next/font/google'
+import { AuthProvider } from './Providers'
 import './globals.css'
 import Footer from '@/components/Footer'
 
@@ -11,7 +12,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="font-mono" suppressHydrationWarning={true}>
+        <AuthProvider>
         {children}
+        </AuthProvider>
         <Footer />
       </body>
     </html>

@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useRenderCount } from "@uidotdev/usehooks";
 
 export default function SignUpForm() {
 
@@ -9,6 +11,8 @@ export default function SignUpForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+
+    const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,7 +55,7 @@ export default function SignUpForm() {
             if(res.ok) {
                 const form = e.target;
                 form.reset();
-
+                router.push("/blog/login"); // redirect to the login page
             } else {
                 console.log("User registration failed.");
             }
