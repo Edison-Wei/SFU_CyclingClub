@@ -93,7 +93,7 @@ export default function SignUpForm() {
                         <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">{error}</div>)
                     }
     
-                    <Link className="text-sm mt-3 text-right" href={'/blog/login'}>
+                    <Link className="text-sm mt-3 text-right" href={'/login'}>
                         Already have an account? <span className="underline">Login Here</span>
                     </Link>
                 </form>
