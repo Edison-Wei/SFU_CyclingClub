@@ -55,7 +55,7 @@ export default function SignUpForm() {
             if(res.ok) {
                 const form = e.target;
                 form.reset();
-                router.push("/blog/login"); // redirect to the login page
+                router.push("/login"); // redirect to the login page
             } else {
                 console.log("User registration failed.");
             }
