@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 import Header from "../components/Header";
 import TextWithButton from "../components/TextWithButton";
 import { SmallText, CreateLink } from "../components/TextWithButton";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { month, weekDay } from "@/components/DateFormat";
@@ -45,7 +45,7 @@ function DisplayInformation({ routeInfo }) {
         Distance <span className="font-normal">{routeInfo.distance}</span>km
       </div>
       <div>
-        Date: <span className="font-normal">{`${weekDay(startdate.getDay())}, ${month(startdate.getMonth())} ${startdate.getDate()} ${startdate.getFullYear()}`}</span>
+        Date: <span className="font-normal">{`${weekDay(startdate.getDay())}, ${month(startdate.getMonth())} ${startdate.getDate()}, ${startdate.getFullYear()}`}</span>
       </div>
       <div>
         Time: <span className="font-normal">{`${routeInfo.start_time.slice(0, 5)} - ${routeInfo.end_time.slice(0, 5)} PST`}</span>
@@ -57,7 +57,8 @@ function DisplayInformation({ routeInfo }) {
 export default function Home() {
   const [routes, setRoutes] = useState();
   const [selection, setSelection] = useState(0);
-  const Map = dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Map is Loading</p> });
+  const Map = useMemo(() => dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Loading Map</p> }))
+
 
   useEffect(() => {
     fetchUpcommingRoute().then(res => (
@@ -76,6 +77,12 @@ export default function Home() {
     }
   }
 
+<<<<<<< HEAD
+=======
+  console.log(routes);
+
+  // dark:invert-[.95] dark:hue-rotate-180
+>>>>>>> e4d00f8 (feature: UI components and connecting the sql database to the executives dashboard page)
   return (
     <div className="">
       <Header />

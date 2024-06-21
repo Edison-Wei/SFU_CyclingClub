@@ -11,6 +11,7 @@ export default async function handler(req, res) {
 
         const connection = await mysql.createConnection(connectionCredentials("route"));
 
+        // Make it more efficient
         const queryIR = `SELECT title, gpx, difficulty, distance, start_date, end_time, start_time FROM CyclingRoutes.ExecRoutes WHERE start_date > ? AND difficulty = "intermediate"`;
         const queryBR = `SELECT title, gpx, difficulty, distance, start_date, end_time, start_time FROM CyclingRoutes.ExecRoutes WHERE start_date > ? AND difficulty = "beginner"`;
 
@@ -22,6 +23,7 @@ export default async function handler(req, res) {
         const [resultsBR] = await connection.execute(queryBR, values);
 
         const routes = [resultsIR[0], resultsBR[0]];
+        // Put condition for no results in the database but returns with status 200
 
         connection.end();
         // fields: fields.map(f => f.name)

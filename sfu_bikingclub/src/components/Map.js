@@ -77,7 +77,7 @@ export default function Map({ geoData, id }) {
 // geojsonData.features[0].geometry.coordinates[0][0][1]
   
   return (
-    <div ref={containerRef} className="md:h-[40vh] w-[45vh] lg:h-[75vh] lg:w-[100vh]">
+    <div ref={containerRef} className="md:h-[40vh] w-[45vh] lg:h-[75vh] lg:w-[90vh]">
       <LazyMapContainer center={[49.246292, -123.116226]} zoom={11.5} size={{width: "100", height: "100"}} className="h-full w-full z-0">
         <Resize containerRef={containerRef} />
         <LazyTileLayer
@@ -86,7 +86,8 @@ export default function Map({ geoData, id }) {
         />
         <AddPopUp lat={49.2732} long={-123.1000} />
         {/* <AddRoute />  Both this and GeoJSON work*/}
-        <GeoJSON data={geoData && JSON.parse(geoData)} style={{color: "black"}} key={id & id} />
+        {/* <GeoJSON data={geoData && JSON.parse(geoData)} style={{color: "black"}} key={id & id} /> */}
+        <GeoJSON data={geoData} style={{color: "black"}} key={id & id} />
       </LazyMapContainer>
     </div>
   );
