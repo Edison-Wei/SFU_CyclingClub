@@ -4,12 +4,12 @@ const postSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        min: 4
+        min: 1
     },
     desc: {
         type: String,
         required: true,
-        min: 6
+        min: 1
     },
     category: {
         type: String,
@@ -26,10 +26,9 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    likes: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "User",
-        default: []
+    image: {
+        type: String, // Single image URL
+        required: true
     }
 }, {timestamps: true})
 

@@ -8,9 +8,8 @@ export async function GET(req) {
     try {
         const posts = await Post.find({}).limit(16).populate("authorId");
         return NextResponse.json(posts, { status: 200 });
-        
     } catch (error) {
-        return NextResponse.json({message: "An error occured while getting post"}, {status: 500});
+        return NextResponse.json({message: "An error occurred while getting posts"}, {status: 500});
     }
 }
 
@@ -23,7 +22,6 @@ export async function POST(req) {
 
         return NextResponse.json(newPost, { status: 201 });
     } catch (error) {
-        return NextResponse.json({message: "An error occured while making post"}, {status: 500});
+        return NextResponse.json({ message: "An error occurred while making post" }, { status: 500 });
     }
-
 }

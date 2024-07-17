@@ -1,18 +1,23 @@
+import BlogPost from "@/components/BlogPost";
 import Header from "@/components/Header";
-import LoginForm from "@/components/LoginForm";
+import NewPost from "@/components/NewPost";
 import UserInfo from "@/components/UserInfo";
 
-export default function Events() {
+export default function Blog() {
     return (
-        <div className="w-full h-full py-6">
+        <div className="w-full h-full py-2">
             <Header />
             <UserInfo />
-            <div className="px-4">
-                <button class="flex items-center justify-center w-12 h-12 bg-primary-red rounded-full text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                </button>
+            <div className="flex flex-wrap justify-center">
+                <BlogPost />
+                <BlogPost />
+                <BlogPost />
+                <BlogPost />
+                <BlogPost />
+                {/* Add more BlogPost components here as needed */}
+            </div>
+            <div className="sticky bottom-0 flex justify-center w-full">
+                <NewPost />
             </div>
         </div>
         
