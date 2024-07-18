@@ -1,32 +1,30 @@
 import cross from "/public/crossmark.svg"
 import Image from "next/image"
 
-export default function RouteLayout({ title, distance, start_date, id, setIdSelection, setShowModal }) {
-
-    function handleDeletion(id) {
-        // setIdSelection(id);
-        setShowModal(true);
-    }
+function RouteLayout({ routeinfo, setSelectedRoute, setShowModal }) {
 
     return (
-        <div className="relative p-1 border-b-2 border-primary-red md:h-16 max-h-20">
-            <button onClick={() => handleDeletion(id)} className="absolute p-1 h-full">
+        <div className="flex border-b-2 border-primary-red md:h-16 max-h-20 sm:text-[10px] md:text-[16px] lg:text-[18px] hover:bg-gray-400">
+            <button onClick={() => setShowModal(true)} className="pl-2 h-full">
                 <Image src={cross} alt="Delete" height={18} width={18}/>
+                {/* &#10060; */}
             </button>
-            <button onClick={() => setIdSelection(id)} className="grid grid-cols-5 w-full">
-                <p className="col-start-2 col-span-2">
-                    {title}
+            <button onClick={() => setSelectedRoute(routeinfo)} className="grid grid-cols-5 content-center w-full h-full">
+                <h2 className="col-start-2 col-span-2 max-h-20 text-left truncate">
+                    {routeinfo.title}
+                </h2>
+                <p className="">
+                    {routeinfo.distance}
                 </p>
-                <div className="">
-                    {distance}
-                </div>
-                <div className="">
-                    {start_date}
-                </div>
+                <p className="">
+                    {routeinfo.start_date.slice(0,10)}
+                </p>
             </button>
         </div>
     )
 }
+
+export default RouteLayout;
 
 const data = {
     title: "No active",
