@@ -11,9 +11,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="font-mono" suppressHydrationWarning={true}>
+      <body className="font-roboto" suppressHydrationWarning={true}>
         <AuthProvider>
-        {children}
+          {children}
         </AuthProvider>
         <Footer />
       </body>
