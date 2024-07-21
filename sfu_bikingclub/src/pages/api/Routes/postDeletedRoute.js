@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from "next/server";
 import connectionCredentials from '../../../app/utils/dbConnection';
 
 export default async function handler(req, res) {
-    if (req.method !== "GET") {
+    if (req.method !== "POST") {
         return res.status(405).json({ message: "Method not allowed" });
     }
 
