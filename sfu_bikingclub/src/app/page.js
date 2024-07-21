@@ -77,15 +77,10 @@ export default function Home() {
     }
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   console.log(routes);
 
   // dark:invert-[.95] dark:hue-rotate-180
->>>>>>> e4d00f8 (feature: UI components and connecting the sql database to the executives dashboard page)
-=======
->>>>>>> eb19888 (changed the styling of the home page)
+
   return (
     <div className="">
       <Header />
