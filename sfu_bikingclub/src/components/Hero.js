@@ -18,7 +18,7 @@ export default function Hero() {
                 <div className="ml-4">
                     <p className="mb-2 text-[40px]">SFU CYCLING CLUB</p>
                     <div className="md:text-[15px] font-[550] hover:text-rose-600">
-                        <Link href="#joinInformation">JOIN NOW!</Link>
+                        <Link href="https://linktr.ee/sfucycling">JOIN NOW!</Link>
                     </div>
                 </div>
             </div>

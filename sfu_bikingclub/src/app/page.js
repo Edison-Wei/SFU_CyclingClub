@@ -90,7 +90,7 @@ export default function Home() {
         <p className="text-lg mb-4 text-center max-w-2xl">
           Our doors are open to everyone at SFU! Whether you're a seasoned cyclist or a newcomer to the sport, we welcome you to join us.
         </p>
-        <a href="https://go.sfss.ca/clubs/916/info" className="text-white bg-primary-red hover:bg-gray-500 font-bold py-2 px-4 rounded">
+        <a href="https://linktr.ee/sfucycling" className="text-white bg-primary-red hover:bg-gray-500 font-bold py-2 px-4 rounded">
           Join Us
         </a>
       </div>
@@ -116,20 +116,20 @@ export default function Home() {
         </div>
         <div className="flex justify-around items-center md:h-[400px] lg:h-[600px] xl:h-[800px]">
           <div className="flex flex-col">
-            <h3 className="text-[40px] font-semibold mb-2 mx-4">Before Joining Us</h3>
-            <h3 className="text-[40px] font-semibold mb-2">On Any Of Our Rides</h3>
+            <h3 className="text-3xl font-semibold mb-2 mx-4">Before Joining Us</h3>
+            <h3 className="text-3xl font-semibold mb-2">On Any Of Our Rides</h3>
           </div>
 
           <div className="max-w-2xlg p-8 bg-white shadow-lg rounded-lg">
-            <p className="text-gray-700 mb-4">What to bring/wear:</p>
-            <ul className="list-disc list-inside text-gray-700 mb-4">
+            <p className="text-xl text-gray-700 mb-4">What to bring/wear:</p>
+            <ul className="text-xl list-disc list-inside text-gray-700 mb-4">
               <li>Bicycle and helmet</li>
               <li>Comfortable shoes and appropriate clothing for the weather (check the weather forecast)</li>
               <li>Enough water and snacks for the ride</li>
               <li>Front and tail lights</li>
               <li>A set of tools and a spare tube (make sure everything is tuned and working)</li>
             </ul>
-            <a href="/SFSS-Liability-and-Assumption-of-Risk-Waivers.pdf" download className="text-blue-500 underline">Download Waiver Form</a>
+            <a href="/SFSS-Liability-and-Assumption-of-Risk-Waivers.pdf" download className="text-m text-blue-500 underline">Download Waiver Form</a>
           </div>
         </div>
         <div className="flex justify-around md:h-[400px] lg:h-[600px] xl:h-[850px] items-center bg-gray-100 text-black">
@@ -139,7 +139,16 @@ export default function Home() {
               className="h-auto w-auto" />
           </div>
           <p id="joinInformation" />
-          <TextWithButton title={"Ready To Join the SFU Cycling Club?"} text={"Discord Link Here"} stext={"Join Our Riding Community"} link={"https://www.sfu.ca/"} linkName={"Discord"} />
+          <div className="text-center p-6">
+            <h2 className="text-2xl font-bold mb-2">Ready To Join the SFU Cycling Club?</h2>
+            <p className="text-xl mb-4">We would love to have you!</p>
+            <a
+              href="https://linktr.ee/sfucycling"
+              className="bg-[#890B29] text-white text-m font-bold cursor-pointer px-6 py-2 rounded-lg"
+            >
+              Join Us
+            </a>
+          </div>
         </div>
       </div>
     </div>
