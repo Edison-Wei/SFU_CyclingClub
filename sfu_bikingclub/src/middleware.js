@@ -1,5 +1,5 @@
-export {default} from 'next-auth/middleware';
+export { default } from 'next-auth/middleware';
 
 // stops users from accessing blog once they are signed out (protects pages)
 
-export const config = {matcher: ['/blog'] };
+export const config = { matcher: ['/dashboard'] };

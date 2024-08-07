@@ -1,4 +1,5 @@
 'use client'
+import UserInfo from "@/components/UserInfo";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -15,6 +16,10 @@ export default function ExecNavbar() {
                     <Link href={"/dashboard"} className="underline hover:opacity-70 font-medium">Dashboard</Link>
                     <Link href={"/dashboard/insert"} className="underline hover:opacity-70 font-medium">Insert Route</Link>
                     <Link href={"/dashboard/member"} className="underline hover:opacity-70 font-medium">Member Route</Link>
+                    <Link href={"/createPost"} className="underline hover:opacity-70 font-medium">Create Blog Post</Link>
+                </div>
+                <div className="absolute bottom-0 w-full">
+                    <UserInfo />
                 </div>
             </div>
         </aside>

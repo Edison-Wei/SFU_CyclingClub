@@ -7,7 +7,7 @@ export default function Blog() {
     return (
         <div className="w-full h-full py-2">
             <Header />
-            <UserInfo />
+            {/* <UserInfo /> */}
             <div className="flex flex-wrap justify-center">
                 <BlogPost />
                 <BlogPost />
@@ -20,6 +20,6 @@ export default function Blog() {
                 <NewPost />
             </div>
         </div>
-        
+
     );
 }
