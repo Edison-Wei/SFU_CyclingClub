@@ -51,7 +51,7 @@ export default function About() {
                         <div className="flex justify-center">
                             <a
                                 href="https://linktr.ee/sfucycling"
-                                className="bg-[#890B29] text-white text-m font-bold cursor-pointer px-6 py-2 rounded-lg"
+                                className="bg-primary-red text-white text-m hover:bg-gray-500 font-bold cursor-pointer px-6 py-2 rounded-lg"
                             >
                                 Join Us
                             </a>

@@ -46,7 +46,7 @@ const Slideshow = () => {
                 <p className="text-md md:text-xl lg:text-xl mb-4">We would love to have you!</p>
                 <a
                     href="https://linktr.ee/sfucycling"
-                    className="bg-primary-red text-white text-md font-bold cursor-pointer px-6 py-2 rounded-lg"
+                    className="bg-primary-red text-white text-md hover:bg-gray-500 font-bold cursor-pointer px-6 py-2 rounded-lg"
                 >
                     Join Us
                 </a>
