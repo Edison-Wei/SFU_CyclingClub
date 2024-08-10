@@ -83,7 +83,7 @@ export default function Map({ geoData, id }) {
         <AddPopUp lat={49.2732} long={-123.1000} />
         {/* <AddRoute />  Both this and GeoJSON work*/}
         <GeoJSON data={geoData && JSON.parse(geoData)} style={{color: "black"}} key={id & id} /> 
-        {/* Change to bottom when working on none IP connection */}
+        {/* Change to bottom when working on non IP connection */}
         {/* <GeoJSON data={geoData} style={{color: "black"}} key={id & id} /> */}
       </LazyMapContainer>
     </div>
