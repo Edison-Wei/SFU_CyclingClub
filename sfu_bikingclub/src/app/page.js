@@ -18,7 +18,7 @@ async function fetchUpcommingRoute() {
   } catch (error) {
     console.error("Failed to fetch UpcomingRoute: ", error);
     const data = {
-      title: "No active",
+      title: "No active routes",
       gpx: "",
       difficulty: "null",
       distance: 0,
@@ -79,10 +79,6 @@ export default function Home() {
         break;
     }
   }
-
-  console.log(routes);
-
-  // dark:invert-[.95] dark:hue-rotate-180
 
   return (
     <div className="">
