@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { month, weekDay } from "@/components/DateFormat";
-import SlideShow from "@/components/SlideShow";
+import SlideShow from "@/components/Slideshow";
 import Image from "next/image";
 
 async function fetchUpcommingRoute() {
