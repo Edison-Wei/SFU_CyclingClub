@@ -1,25 +1,27 @@
-export default function BlogPost() {
-    return (
-      <div>
-        <div className="item-3 place-items-start">
-            {/* Change this to lead to more information about the post, comments etc */}
-          <a
-            href="https://design.tutsplus.com/articles/envato-tuts-community-challenge-created-by-you-july-edition--cms-26724"
-            className="card"
-            >
+export default function BlogPost({ post }) {
+  return (
+    <div className="w-72 h-96 m-4 flex flex-col bg-white shadow-md transition-shadow duration-300 ease-in-out hover:shadow-lg overflow-hidden">
+      <a href={`/blog/${post._id}`} className="flex flex-col h-full">
+        {post.image ? (
+          <>
             <div
-              className="thumb"
-              style={{ backgroundImage: 'url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/flex-5.jpg)' }}>
+              className="h-1/2 bg-cover bg-center"
+              style={{ backgroundImage: `url(${post.image})` }}
+            ></div>
+            <div className="flex flex-col h-1/2 p-4">
+              <h1 className="text-lg font-bold truncate mb-2">{post.title}</h1>
+              <p className="text-sm text-gray-700 flex-1 overflow-y-auto line-clamp-2">{post.desc}</p>
+              <span className="text-xs text-gray-500">{post.authorName}</span>
             </div>
-            <article>
-              <h1 
-                className="font-bold">Created by You, July Edition</h1>
-              <p>Welcome to our monthly feature of fantastic tutorial results created by you, the Envato Tuts+ community!</p>
-              <span>Melody Nieves</span>
-            </article>
-          </a>
-        </div>
-      </div>
-    );
-  }
-  
+          </>
+        ) : (
+          <div className="flex flex-col h-full p-4">
+            <h1 className="text-lg font-bold mb-2">{post.title}</h1>
+            <p className="text-sm text-gray-700 flex-1 overflow-y-auto">{post.desc}</p>
+            <span className="text-xs text-gray-500 text-center">{post.authorName}</span>
+          </div>
+        )}
+      </a>
+    </div>
+  );
+}

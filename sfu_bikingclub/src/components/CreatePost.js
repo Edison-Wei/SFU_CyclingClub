@@ -24,6 +24,7 @@ export default function CreatePost() {
                     desc: e.get("desc"),
                     category: e.get("category"),
                     authorId: session?.user?.id,
+                    authorName: session?.user?.name,
                     image: e.get("image"),
                 }),
             });

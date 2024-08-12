@@ -26,10 +26,14 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
+    authorName: {
+        type: String,
+        required: true,
+    },
     image: {
         type: String, // Single image URL
     }
-}, {timestamps: true})
+}, { timestamps: true })
 
-const Post =  mongoose.models.Post || mongoose.model("Post", postSchema);
+const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
 export default Post;
