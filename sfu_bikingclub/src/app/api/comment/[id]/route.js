@@ -1,6 +1,7 @@
-import { connectMongoDB } from "../../../../lib/mongodb";
+import { connectMongoDB } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
-import Comment from "../../../../models/comment";
+import Comment from "@/models/comment";
+
 
 export async function GET(req, ctx) {
     await connectMongoDB();

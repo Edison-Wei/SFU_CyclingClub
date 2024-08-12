@@ -7,7 +7,7 @@ export default function ExecNavbar() {
     const [toggleSideBar, settoggleSideBar] = useState(false);
     return (
         <aside>
-            <button className={`pl-5 fixed text-[40px] font-bold z-20`} onClick={() => settoggleSideBar(!toggleSideBar)}>
+            <button className={`pl-5 pt-1 fixed text-[40px] font-bold z-20`} onClick={() => settoggleSideBar(!toggleSideBar)}>
                 &#8801;
             </button>
             <div className={`sm:w-1/6 pl-5 pr-3 h-full absolute z-10 bg-gray-200 transition duration-500 ${toggleSideBar ? "translate-x-0 " : "-translate-x-full"}`}>

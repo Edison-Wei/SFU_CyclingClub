@@ -7,7 +7,8 @@ import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { month, weekDay } from "@/components/DateFormat";
-import Slideshow from "@/components/SlideShow";
+import SlideShow from "@/components/SlideShow";
+import Image from "next/image";
 
 async function fetchUpcommingRoute() {
   try {
@@ -35,20 +36,21 @@ function DisplayInformation({ routeInfo }) {
   const startdate = new Date(routeInfo.start_date);
 
   return (
-    <div className="grid grid-rows-5 gap-4 p-6 text-[16px] font-semibold">
-      <span className="place-self-center text-[20px] font-bold">
+    <div className="grid grid-rows-5 gap-4 p-6 text-[16px] md:text-[20px] font-semibold">
+      <span className="place-self-center p-2 text-[20px] font-bold underline underline-offset-2">
         {routeInfo.title.toUpperCase()}
       </span>
       <div>
         Difficulty: <span className="font-normal">{routeInfo.difficulty}</span>
       </div>
       <div>
-        Distance <span className="font-normal">{routeInfo.distance}</span>km
+        Distance: <span className="font-normal">{routeInfo.distance} km</span>
       </div>
       <div>
         Date: <span className="font-normal">{`${weekDay(startdate.getDay())}, ${month(startdate.getMonth())} ${startdate.getDate()}, ${startdate.getFullYear()}`}</span>
       </div>
       <div>
+        {/* Can put the time to 12 hour format for better readability */}
         Time: <span className="font-normal">{`${routeInfo.start_time.slice(0, 5)} - ${routeInfo.end_time.slice(0, 5)} PST`}</span>
       </div>
     </div>
@@ -87,7 +89,7 @@ export default function Home() {
       <div className="flex flex-col justify-center items-center bg-white text-black py-12">
         <p className="text-2xl md:text-3xl lg:text-3xl xl:text-3xl font-bold mb-4">Ready to Ride?</p>
         <p className="text-md md:text-lg lg:text-lg xl:text-lg mb-4 text-center max-w-2xl">
-          Our doors are open to everyone at SFU! Whether you're a seasoned cyclist or a newcomer to the sport, we welcome you to join us.
+          Our doors are open to everyone at SFU! Whether you&apos;re a seasoned cyclist or a newcomer to the sport, we welcome you to join us.
         </p>
         <a href="https://linktr.ee/sfucycling" className="text-white bg-primary-red hover:bg-gray-500 font-bold py-2 px-4 rounded">
           Join Us
@@ -151,7 +153,7 @@ export default function Home() {
 
       <div className="w-full p-12 bg-gradient-to-r from-gray-100 to-gray-300 shadow-lg rounded-lg flex flex-col md:flex-row justify-between items-center">
         <div className="text-center md:w-1/2 p-6 md:border-r-2 border-gray-400">
-          <h3 className="text-xl text-primary-red mb-4">This Month's Distance Biked</h3>
+          <h3 className="text-xl text-primary-red mb-4">This Month&apos;s Distance Biked</h3>
           <p className="text-7xl font-bold text-primary-red mb-4">849.7 km</p>
           <p className="text-xl text-primary-red">Keep pushing those pedals!</p>
         </div>
@@ -165,7 +167,7 @@ export default function Home() {
 
 
 
-      <Slideshow />
+      <SlideShow />
 
 
       <section className="my-16 py-10 bg-gray-100">
@@ -173,16 +175,12 @@ export default function Home() {
           <div className="max-w-2xlg p-8 bg-white shadow-lg rounded-lg">
             <h2 className="text-4xl font-bold text-primary-red mb-8">Our Sponsors</h2>
             <p className="text-lg text-gray-700 mb-8">
-              We are grateful for the support of our sponsors, who make our club's activities possible.
+              We are grateful for the support of our sponsors, who make our club&apos;s activities possible.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8 items-center">
               {/* Sponsor 1 */}
               <div className="flex justify-center">
-                <img
-                  src="/sfss.png"
-                  alt="Sponsor 1 Logo"
-                  className="h-20 md:h-24 lg:h-32 object-contain"
-                />
+                <Image src={"/sfss.png"} width={350} height={350} alt={"SFSS Sponsor Logo"} className="h-20 md:h-24 lg:h-32 object-contain"></Image>
               </div>
               {/* Sponsor 2
               <div className="flex justify-center">

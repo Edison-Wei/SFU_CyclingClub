@@ -11,14 +11,14 @@ export default function About() {
                     <section className="mb-8 p-6 bg-gray-100 shadow-md rounded-lg">
                         <h3 className="text-2xl font-semibold mb-2">Turning the gears - Our beginning</h3>
                         <p className="sm:text-md md:text-xl lg:text-xl text-gray-700 mb-4">
-                            In October 2021, amidst a growing demand for a university community dedicated to road cycling, a group of enthusiastic cyclists from Simon Fraser University (SFU) joined a Discord group. As the group gained momentum, it became clear that cycling was popularised at SFU and there needed to be a formal structure to support and expand SFU’s cycling activities. This led to the SFU Cycling Club's official recognition by the Simon Fraser Student Society (SFSS) in 2023. Now a fully accredited club, SFU Cycling is the cornerstone for prospective to seasoned cyclists who aspire to enjoy the sport of cycling within an uplifted community of enthusiasts.
+                            In October 2021, amidst a growing demand for a university community dedicated to road cycling, a group of enthusiastic cyclists from Simon Fraser University (SFU) joined a Discord group. As the group gained momentum, it became clear that cycling was popularised at SFU and there needed to be a formal structure to support and expand SFU`s cycling activities. This led to the SFU Cycling Club`s official recognition by the Simon Fraser Student Society (SFSS) in 2023. Now a fully accredited club, SFU Cycling is the cornerstone for prospective to seasoned cyclists who aspire to enjoy the sport of cycling within an uplifted community of enthusiasts.
                         </p>
                     </section>
 
                     <section className="mb-8 p-6 bg-gray-100 shadow-md rounded-lg">
                         <h3 className="text-2xl font-semibold mb-2">Pedalling Forward</h3>
                         <p className="sm:text-md md:text-xl lg:text-xl text-gray-700 mb-4">
-                            At the heart of the SFU Cycling Club is a vibrant community dedicated to fostering a love for cycling. Our activities revolve around organising regular bike rides that cater to various skill levels and interests. Whether you're looking to explore scenic routes, push your limits on challenging terrains, or simply enjoy a leisurely ride with friends, there's a spot for you in our club!
+                            At the heart of the SFU Cycling Club is a vibrant community dedicated to fostering a love for cycling. Our activities revolve around organising regular bike rides that cater to various skill levels and interests. Whether you`re looking to explore scenic routes, push your limits on challenging terrains, or simply enjoy a leisurely ride with friends, there`s a spot for you in our club!
                         </p>
 
                         <p className="sm:text-md md:text-xl lg:text-xl text-gray-700 mb-4">
@@ -43,10 +43,10 @@ export default function About() {
                     <section className="mb-8 p-6 bg-gray-100 shadow-md rounded-lg">
                         <h3 className="text-2xl font-semibold mb-2">Ready to Ride?</h3>
                         <p className="sm:text-md md:text-xl lg:text-xl text-gray-700 mb-4">
-                            Our doors are open to everyone at SFU! Whether you're a seasoned cyclist or a newcomer to the sport, we welcome you to join us. Our club thrives on diversity, and we believe that every member brings something unique to our community. As long as you have a passion for cycling and a desire to be part of a supportive and dynamic group, the SFU Cycling Club is the place for you. Come ride with us and discover the joy of cycling in a supportive and enthusiastic community!
+                            Our doors are open to everyone at SFU! Whether you`re a seasoned cyclist or a newcomer to the sport, we welcome you to join us. Our club thrives on diversity, and we believe that every member brings something unique to our community. As long as you have a passion for cycling and a desire to be part of a supportive and dynamic group, the SFU Cycling Club is the place for you. Come ride with us and discover the joy of cycling in a supportive and enthusiastic community!
                         </p>
                         <p className="sm:text-md md:text-xl lg:text-xl text-gray-700 mb-4">
-                            For more information or to join our next ride, connect with us on our Discord or follow us on our social media channels. We can't wait to ride with you!
+                            For more information or to join our next ride, connect with us on our Discord or follow us on our social media channels. We can`t wait to ride with you!
                         </p>
                         <div className="flex justify-center">
                             <a

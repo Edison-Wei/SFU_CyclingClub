@@ -75,16 +75,12 @@ export default function Executives() {
                     <div className="max-w-2xlg p-8 bg-white shadow-lg rounded-lg">
                         <h2 className="text-4xl font-bold text-primary-red mb-8">Our Sponsors</h2>
                         <p className="text-lg text-gray-700 mb-8">
-                            We are grateful for the support of our sponsors, who make our club's activities possible.
+                            We are grateful for the support of our sponsors, who make our club&apos;s activities possible.
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8 items-center">
                             {/* Sponsor 1 */}
                             <div className="flex justify-center">
-                                <img
-                                    src="/sfss.png"
-                                    alt="Sponsor 1 Logo"
-                                    className="h-20 md:h-24 lg:h-32 object-contain"
-                                />
+                                <Image src={"/sfss.png"} width={350} height={350} alt={"SFSS Sponsor Logo"} className="h-20 md:h-24 lg:h-32 object-contain"></Image>
                             </div>
                             {/* Sponsor 2
                             <div className="flex justify-center">

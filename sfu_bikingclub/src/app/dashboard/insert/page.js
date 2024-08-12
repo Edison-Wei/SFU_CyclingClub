@@ -57,7 +57,7 @@ export default function InsertRoute() {
             try {
                 const [parsedFile, error] = parseGPX(e.target.result);
                 if(error)
-                    throw new Error("502: Could not read GPX file");
+                    throw new Error("502: Could not read GPX file"); // Change to object with status to check
 
                 const totalDistance = parsedFile.tracks[0].distance.total;
                 const pointOne = parsedFile.tracks[0].points[0];

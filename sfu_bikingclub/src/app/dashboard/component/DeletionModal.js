@@ -4,12 +4,11 @@ export default function DeletionModal({ routeinfo, setShowModal, handleDeleteRou
     }
 
     return (
-            <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-500 bg-opacity-40 transition-opacity" onClick={handleClose}>
+            <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black bg-opacity-40" onClick={handleClose}>
 
                 <div className="flex min-h-full w-1/2 items-end justify-center text-center sm:items-center sm:p-0">
-                    <div className="relative transform sm:p-6 md:p-8 lg:p-10 overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div className="relative transform sm:p-6 md:p-8 lg:p-10 overflow-hidden rounded-lg bg-white text-left shadow-xl sm:my-8 sm:w-full sm:max-w-md md:max-w-xl">
                         <div className="pb-6 sm:text-[15px] md:text-[20px] lg:text-[25px]">
-                            Delete Route ""
                             {`Are you sure you want to delete this route? '${routeinfo.title}?'`}
                         </div>
                         <div className="flex justify-around p-2 sm:text-[12px] md:text-[15px] lg:text-[20px]">

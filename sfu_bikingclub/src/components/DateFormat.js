@@ -17,8 +17,8 @@ export function weekDay(day) {
     }
 }
 
-export function month(monthn) {
-    switch(monthn) {
+export function month(month) {
+    switch(month) {
         case 0:
             return "Jan";
         case 1:

@@ -7,7 +7,7 @@ const images = [
     '/image4.jpg'
 ];
 
-const Slideshow = () => {
+const SlideShow = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     const nextSlide = () => {
@@ -55,4 +55,4 @@ const Slideshow = () => {
     );
 };
 
-export default Slideshow;
+export default SlideShow;
