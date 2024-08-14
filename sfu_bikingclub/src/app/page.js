@@ -9,21 +9,23 @@ import axios from "axios";
 import { month, weekDay } from "@/components/DateFormat";
 import SlideShow from "@/components/Slideshow";
 import Image from "next/image";
+import Link from "next/link";
+import { transformRouteData } from "@/components/transformRouteData";
 
 async function fetchUpcommingRoute() {
   try {
-    const currentDate = new Date().toISOString();
-    const res = await axios.get(`/api/Routes/getUpcomingRoute?currentDate=${currentDate.slice(0, 10)}`);
+    const res = await axios.get(`/api/Routes/getUpcomingRoute`);
 
-    return res.data.routes;
+    return res.data.results;
   } catch (error) {
-    console.error("Failed to fetch UpcomingRoute: ", error);
+    // console.error("Failed to fetch UpcomingRoute: ", error);
     const data = {
-      title: "No active routes",
+      rid: 0,
+      title: "No active Rides",
       gpx: "",
-      difficulty: "null",
+      difficulty: "Not Available",
       distance: 0,
-      start_date: "2024-01-01",
+      start_date: "1965-09-09T07:00:00.000Z",
       start_time: "00:00",
       end_time: "00:00"
     }
@@ -37,7 +39,7 @@ function DisplayInformation({ routeInfo }) {
 
   return (
     <div className="grid grid-rows-5 gap-4 p-6 text-[16px] md:text-[20px] font-semibold">
-      <span className="place-self-center p-2 text-[20px] font-bold underline underline-offset-2">
+      <span className="place-self-center p-2 md:text-[22px] font-bold underline underline-offset-2">
         {routeInfo.title.toUpperCase()}
       </span>
       <div>
@@ -50,14 +52,12 @@ function DisplayInformation({ routeInfo }) {
         Date: <span className="font-normal">{`${weekDay(startdate.getDay())}, ${month(startdate.getMonth())} ${startdate.getDate()}, ${startdate.getFullYear()}`}</span>
       </div>
       <div>
-        {/* Can put the time to 12 hour format for better readability */}
+        {/* Can be 12 hour format for better readability */}
         Time: <span className="font-normal">{`${routeInfo.start_time.slice(0, 5)} - ${routeInfo.end_time.slice(0, 5)} PST`}</span>
       </div>
     </div>
   )
 }
-
-
 
 export default function Home() {
   const [routes, setRoutes] = useState();
@@ -67,7 +67,9 @@ export default function Home() {
 
   useEffect(() => {
     fetchUpcommingRoute().then(res => (
-      setRoutes(res)
+      // parseGPX only works in browser not on Server
+      console.log(res),
+      setRoutes(transformRouteData(res))
     ));
   }, []);
 
@@ -82,6 +84,7 @@ export default function Home() {
     }
   }
 
+  console.log(routes);
   return (
     <div className="">
       <Header />
@@ -107,7 +110,7 @@ export default function Home() {
               link={"https://www.strava.com/clubs/1079967"}
               linkName={"Strava"}
             />
-            <ul className="grid grid-cols-2 w-full justify-items-center">
+            <ul className="grid grid-cols-2 w-full justify-items-center text-[14px] md:text-[18px]">
               <li>
                 <button onClick={() => onclick("intermediate")} className={`underline hover:text-primary-red`}>Intermediate</button>
               </li>
@@ -115,15 +118,17 @@ export default function Home() {
                 <button onClick={() => onclick("beginner")} className={`underline hover:text-primary-red`}>Beginner</button>
               </li>
             </ul>
-            {routes && <DisplayInformation routeInfo={routes && routes[selection]} />}
+            {routes && <DisplayInformation routeInfo={routes[selection]} />}
           </div>
           {/* Right Section */}
           <div className="flex flex-col items-center md:items-start w-full md:w-1/2 bg-gray-100 text-black px-4 sm:px-6 lg:px-8">
-            <SmallText stext={"Upcoming Ride"} className="text-center mb-4" />
-            <div className="w-full max-w-full overflow-hidden">
-              <Map geoData={routes && routes[selection].gpx} id={selection} />
+            <div className="hidden md:block mb-4 md:text-[20px]">
+              Upcoming Ride
             </div>
-            <CreateLink link={"./Suggestion"} linkText={"Make a Suggestion"} className="mt-4" />
+            <div className="w-full max-w-full overflow-hidden">
+              {routes && <Map geoData={routes[selection].geojson} center={[routes[selection].latitude, routes[selection].longitude]} zoom={routes[selection].zoom} id={selection} />}
+            </div>
+            <Link href={"./Suggestion"} className="md:pt-4 md:px-4 underline hover:text-primary-red">{"Make a Suggestion"}</Link>
           </div>
         </div>
       </div>
@@ -163,8 +168,6 @@ export default function Home() {
           <p className="text-xl text-primary-red mb-6">Be a part of our community and track your progress with us!</p>
         </div>
       </div>
-
-
 
 
       <SlideShow />

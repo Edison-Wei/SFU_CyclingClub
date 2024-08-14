@@ -7,30 +7,23 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { currentDate } = req.query;
-
         const connection = await mysql.createConnection(connectionCredentials("route"));
 
-        // Make it more efficient
-        const queryIR = `SELECT title, gpx, difficulty, distance, start_date, end_time, start_time FROM CyclingRoutes.ExecRoutes WHERE start_date > ? AND difficulty = "intermediate"`;
-        const queryBR = `SELECT title, gpx, difficulty, distance, start_date, end_time, start_time FROM CyclingRoutes.ExecRoutes WHERE start_date > ? AND difficulty = "beginner"`;
+        // Using the VIEW upcomingRide defined in ExecRoute.sql
+        const queryUpcoming = `SELECT * FROM CyclingRoutes.upcomingRide`;
 
-        // Can be used to pass parameters into our sql query
-        // let values = [ data1, data2, ...data3];
-        let values = [currentDate];
-
-        const [resultsIR] = await connection.execute(queryIR, values);
-        const [resultsBR] = await connection.execute(queryBR, values);
-
-        const routes = [resultsIR[0], resultsBR[0]];
-        // Put condition for no results in the database but returns with status 200
+        const [results] = await connection.execute(queryUpcoming);
 
         connection.end();
-        // fields: fields.map(f => f.name)
-        res.status(200).json({ routes });
+
+        // Not possible to parse GPX file using parseGPX
+        // Can write a function to parse if needed
+
+
+        res.status(200).json({ results });
 
     } catch (error) {
-        console.error("Error in StravaRides: ", error);
+        console.error("Error Fetching upcoming Rides: ", error);
         res.status(500).json({ error: error.message })
     }
 }

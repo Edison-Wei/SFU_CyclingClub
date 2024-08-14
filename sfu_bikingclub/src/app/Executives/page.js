@@ -51,7 +51,7 @@ function SponsorList({ name, link, linkname, image, description }) {
 export default function Executives() {
 
     return (
-        <div className="w-full h-full py-6">
+        <div className="w-full h-full">
             <Header />
             <div className="flex py-8 px-12 justify-center">
                 <span className="text-[30px] font-bold">Executive Team</span>
