@@ -7,4 +7,3 @@ CREATE TABLE RouteSuggestions (
     distance DECIMAL(8, 2) NOT NULL,
     CONSTRAINT email_check CHECK (created_by REGEXP '^[A-Za-z0-9]+@sfu.ca$')
 );
-

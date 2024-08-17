@@ -2,137 +2,120 @@
 
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
-import { parseGPX } from "@we-gold/gpxjs"
-import { CalculateGeojson } from "../component/CalculateGeojson";
+import { parseRoute } from "../component/parseRoute";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 let id = 0;
 
+const initialTimeValues = {
+    startTime: "",
+    message: ""
+};
+
 export default function InsertRoute() {
-    // Information to be inserted into MySQL Database
-    const [title, setTitle] = useState(""); // Can be anything (expect ;)
-    const [difficulty, setDifficulty] = useState(""); // Either beginner or intermediate
-    const [date, setDate] = useState(""); // Date has to be today's date or after (Format of yyyy-mm-dd)
-    const [startTime, setStartTime] = useState(""); // In 24 hour format
-    const [endTime, setEndTime] = useState(""); // In 24 hour format (Has to be greater than startTime)
     const [routeInformation, setRouteInformation] = useState(""); // Will be a string containing the route information (Format of .gpx, .geojson, or .json)
-    const [geojsonData, setGeojsonData] = useState("");
-    const [latitude, setLatitude] = useState();
-    const [longitude, setLongitude] = useState();
-    const [zoom, setZoom] = useState();
+    const [geojsonData, setGeojsonData] = useState(null);
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
+    const [zoom, setZoom] = useState(0);
     const [distance, setDistance] = useState("");
 
-
+    const [time, setTime] = useState(initialTimeValues);
     const [routeRadio, setRouteRadio] = useState(false);
-    const Map = useMemo(() => dynamic(() => import('@/app/dashboard/component/Map'), { ssr: false, loading: () => <p>Loading Map and Route</p> }))
+    const Map = useMemo(() => dynamic(() => import('@/app/dashboard/component/Map'), { ssr: false, loading: () => <p>Loading Map and Route</p> }));
 
-    // console.log(file);
-    // console.log(typeof(file));
+    const router = useRouter();
 
-    function handleSubmit(formData) {
-        // event.preventDefault();
+    async function handleSubmit(formData) {
+        if(geojsonData === "") {
+            alert("Route could not be processed.\nPlease select a different .gpx or .geojson file");
+            return;
+        }
+
         const title = formData.get("title").split(";")[0]; // Can be anything (expect ;)
-        const difficulty = formData.get("difficulty"); // Either beginner or intermediate
+        const difficulty = formData.get("difficulty"); // Either Beginner or Intermediate
         const date = formData.get("date"); // Date has to be today's date or after (Format of yyyy-mm-dd)
         const startTime = formData.get("startTime"); // In 24 hour format
         const endTime = formData.get("endTime"); // In 24 hour format (Has to be greater than startTime)
-        const distance = formData.get("distance"); // Will be a string containing the route information (Format of .gpx, .geojson, or .json)
 
-        console.log(title);
-        console.log(difficulty);
-        console.log(date);
-        console.log(startTime);
-        console.log(endTime);
-        console.log(distance);
+
+        try {
+            const res = axios.post("/api/Routes/postExecRoute", {
+                title: title,
+                difficulty: difficulty,
+                gpx: routeInformation,
+                distance: distance,
+                startDate: date,
+                startTime: startTime,
+                endTime: endTime,
+            });
+
+            alert((await res).data.result);
+            router.push("/dashboard");
+        } catch (error) {
+            alert(error.response.data.error);
+        }
     }
 
     function handleFileInput(e) {
         const fileData = new FileReader();
         fileData.readAsText(e.target.files[0], "UTF-8");
         fileData.onload = e => {
-            setRouteInformation(e.target.result.split(";")[0]);
+            const loadedRoute = e.target.result.split(";")[0];
+            setRouteInformation(loadedRoute);
             setGeojsonData("");
-            console.log(e.target.result);
-            console.log(e.target.result.split(";")[0]);
 
-            try {
-                const [parsedFile, error] = parseGPX(e.target.result);
-                if(error)
-                    throw new Error("502: Could not read GPX file"); // Change to object with status to check
+            const routeInfo = parseRoute({gpx: loadedRoute});
 
-                const totalDistance = parsedFile.tracks[0].distance.total;
-                const pointOne = parsedFile.tracks[0].points[0];
-                const pointTwo = parsedFile.tracks[0].points[parsedFile.tracks[0].points.length-1];
-
-                // Calculate zoom distance (0 space - 10 cities)
-                const tan = Math.tan(45);
-                let lat = pointOne.latitude - pointTwo.latitude;
-                lat = (lat < 0? lat*-1: lat);
-                let lng = pointOne.longitude - pointTwo.longitude;
-                lng = (lng < 0? lng*-1: lng);
-                const zoom = 12 - (lat > lng? lat * tan : lng * tan);
-
-                // Calculate the center of pointOne and pointTwo
-                lat = (pointOne.latitude + pointTwo.latitude)/2;
-                lng = (pointOne.longitude + pointTwo.longitude)/2;
-
-
-                setLatitude(lat);
-                setLongitude(lng);
-                setZoom(zoom);
-                setDistance(totalDistance);
-                setGeojsonData(parsedFile.toGeoJSON());
-            } catch (error) {
-                // console.log(error); // Check this status
-
-                const GeoJSON = JSON.parse(e.target.result);
-                if(GeoJSON.type != "Feature" && GeoJSON.type != "FeatureCollection")
-                    return;
-
-                const jsonData  = CalculateGeojson(GeoJSON);
-                if (!jsonData)
-                    return;
-                console.log("hello");
-
-                setLatitude(jsonData.latitude);
-                setLongitude(jsonData.longitude);
-                setZoom(jsonData.zoom);
-                setDistance(jsonData.totalDistance);
-                setGeojsonData(GeoJSON);
-            }
+            setLatitude(routeInfo.latitude);
+            setLongitude(routeInfo.longitude);
+            setZoom(routeInfo.zoom);
+            setDistance((routeInfo.distance > 1000? routeInfo.distance/1000 : routeInfo.distance));
+            setGeojsonData(routeInfo.geojson);
         };
-        // setGeojsonData(parsedFile.toGeoJSON())
     };
 
+    function handleTimeInput(e) {
+        const { name, value } = e.target;
+        if (name === "startTime") {
+            setTime({...time, [name]: value});
+        }
+
+        if(time.startTime > value)
+            setTime({...time, ["message"]: "Has to be past Start time"});
+    }
+
     return (
-        <div className="py-4 md:px-24 px-14 h-full">
+        <div className="md:py-4 md:px-24 px-14 h-full">
             <form action={handleSubmit} className="w-full p-12 flex flex-col gap-14 bg-gray-300 rounded-xl shadow-xl lg:text-[20px] text-[14px]">
                 <h1 className="-my-5 font-semibold lg:text-[30px] text-[20px]">Add a Route<span className="p-2 text-[10px] md:text-[15px] text-primary-red">All required</span></h1>
 
-                <section className="grid grid-cols-2"> 
+                <section className="md:grid md:grid-cols-2 flex flex-col gap-4"> 
                     <div className="flex flex-col gap-1">
                         <label className="font-normal">Ride Title</label>
-                        <input className="bg-white w-[80%] rounded-lg shadow-md" name="title" placeholder="Ride title..."></input>
+                        <input className="bg-white w-[80%] rounded-lg shadow-md" name="title" placeholder="Ride title..." required></input>
                     </div>
                     <div className="flex flex-col gap-1">
                         <label className="pr-3 font-normal">Ride difficulty:</label>
-                        <select className="p-2 w-[40%] rounded-md shadow-md" name="difficulty">
-                            <option value={"beginner"}>Beginner</option>
-                            <option value={"intermediate"}>Intermediate</option>
+                        <select className="p-2 w-[50%] rounded-md shadow-md" name="difficulty">
+                            <option value={"Beginner"}>Beginner</option>
+                            <option value={"Intermediate"}>Intermediate</option>
                         </select>
                     </div>
                 </section>
-                <section className="grid grid-cols-3 w-full">
+                <section className="md:grid md:grid-cols-3 flex flex-col gap-3 w-full">
                     <div className="flex flex-col gap-1">
                         <label className="font-normal">Ride date:</label>
-                        <input type="date" className="w-[70%] bg-white rounded-lg shadow-md" name="date"></input>
+                        <input type="date" className="w-[80%] bg-white rounded-lg shadow-md" name="date" required></input>
                     </div>
                     <div className="flex flex-col gap-1">
                         <label className="font-normal">Start time:</label>
-                        <input type="time" className="w-[70%] bg-white rounded-lg shadow-md" name="startTime"></input>
+                        <input type="time" className="w-[80%] bg-white rounded-lg shadow-md" name="startTime" label="startTime" onChange={(e) => handleTimeInput(e)} required></input>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="font-normal">End time:</label>
-                        <input type="time" className="w-[70%] bg-white rounded-lg shadow-md" name="endTime"></input>
+                        <label className="font-normal">End time: <span className="font-semibold text-primary-red lg:text-[16px] text-[10px]">{time.message}</span></label>
+                        <input type="time" className="w-[80%] bg-white rounded-lg shadow-md" name="endTime" onChange={(e) => handleTimeInput(e)} required></input>
                     </div>
                 </section>
                 <section className="w-full flex flex-col gap-3">
@@ -149,8 +132,9 @@ export default function InsertRoute() {
                     </div>
                     {!routeRadio && (<div className="flex flex-col">
                         <label className="">Select a GPX or GeoJSON file (Please have a Waypoint/Point indicating the start and end positions)</label>
-                        <input type="file" accept=".gpx,.geojson" onChange={handleFileInput} className="bg-gray-300 border-4 border-gray-300"></input> {/* To add .json support later */}
-                        {routeInformation && <Map geoData={geojsonData} center={[latitude, longitude]} zoom={zoom} id={id = id++}/>} {/* Put label here file cannot be parsed or read*/}
+                        {geojsonData === ""? (<label className="font-semibold text-primary-red">Please select a formatted (.gpx, .geojson) file </label>) : null}
+                        <input type="file" accept=".gpx,.geojson" onChange={handleFileInput} className="w-full bg-gray-300 border-4 border-gray-300" required></input> {/* To add .json support later */}
+                        {routeInformation && <Map geoData={geojsonData} center={[latitude, longitude]} zoom={zoom} id={id++}/>} {/* Put label here when file cannot be read and parsed */}
                     </div>)}
 
                     {routeRadio && (<div className={`z-10 transition duration-500 ${routeRadio? "translate-x-0": "translate-x-full"}`}>
@@ -163,20 +147,10 @@ export default function InsertRoute() {
                 </section>
 
                 <section className="">
-                    <button type="submit" className="">Insert Route</button>
+                    <button type="submit" className="py-1 px-3 bg-primary-red rounded-2xl text-white hover:opacity-70">Insert Route</button>
                 </section>
 
             </form>
         </div>
     );
 }
-
-const data = {
-    title: "No active",
-    gpx: "",
-    difficulty: "null",
-    distance: 0,
-    start_date: "2024-01-01",
-    start_time: "00:00",
-    end_time: "00:00"
-  }

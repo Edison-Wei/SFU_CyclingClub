@@ -45,3 +45,10 @@ export function month(month) {
             return "Dec";
     }
 }
+
+export function time12hour(time) {
+    const hour = time.slice(0,2) % 12;
+    const min = time.slice(3, 5);
+
+    return (hour + ":" + min);
+}

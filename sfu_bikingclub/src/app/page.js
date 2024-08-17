@@ -2,15 +2,14 @@
 import Hero from "@/components/Hero";
 import Header from "../components/Header";
 import TextWithButton from "../components/TextWithButton";
-import { SmallText, CreateLink } from "../components/TextWithButton";
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
-import { month, weekDay } from "@/components/DateFormat";
+import { month, weekDay } from "@/components/DateTimeFormat";
 import SlideShow from "@/components/Slideshow";
 import Image from "next/image";
 import Link from "next/link";
-import { transformRouteData } from "@/components/transformRouteData";
+import { parseRoute } from "./dashboard/component/parseRoute";
 
 async function fetchUpcommingRoute() {
   try {
@@ -66,11 +65,27 @@ export default function Home() {
 
 
   useEffect(() => {
-    fetchUpcommingRoute().then(res => (
-      // parseGPX only works in browser not on Server
-      console.log(res),
-      setRoutes(transformRouteData(res))
-    ));
+    fetchUpcommingRoute().then(res => {
+      const routeinfo = res.map(route => {
+        // parseGPX only works on browser(client) not on server
+        const parsedRoute = parseRoute(route);
+        return {
+          rid: route.rid,
+          title: route.title,
+          geojson: parsedRoute.geojson,
+          latitude: parsedRoute.latitude,
+          longitude: parsedRoute.longitude,
+          zoom: parsedRoute.zoom,
+          difficulty: route.difficulty,
+          distance: route.distance,
+          start_date: route.start_date,
+          start_time: route.start_time,
+          end_time: route.end_time,
+        }
+      });
+      setRoutes(routeinfo);
+    }
+  );
   }, []);
 
   function onclick(info) {
@@ -84,7 +99,6 @@ export default function Home() {
     }
   }
 
-  console.log(routes);
   return (
     <div className="">
       <Header />
