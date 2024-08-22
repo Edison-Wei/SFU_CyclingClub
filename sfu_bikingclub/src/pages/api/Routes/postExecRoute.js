@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { title, difficulty, gpx, distance, startDate, startTime, endTime } = req.body;
+        const { title, difficulty, gpx, distance, start_Date, start_Time, end_Time } = req.body;
 
         const connection = await mysql.createConnection(connectionCredentials("route"));
 
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         const [ rid ] = await connection.execute(queryrid);
         rid[0].rid += 1;
 
-        const values = [rid[0].rid, title, gpx, difficulty, distance, startDate, startTime, endTime];
+        const values = [rid[0].rid, title, gpx, difficulty, distance, start_Date, start_Time, end_Time];
 
         await connection.execute(queryInsertRoute, values);
 

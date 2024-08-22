@@ -20,5 +20,6 @@ CREATE VIEW upcomingRide AS
         UNION
     (SELECT * FROM ExecRoutes WHERE difficulty = 'Beginner' AND start_date = (SELECT MIN(start_date) FROM ExecRoutes WHERE difficulty = 'Beginner' AND start_date >= CURRENT_DATE()));
 
+-- Not 100% if these changes are applied to the table
 -- ALTER TABLE `ExecRoutes` CHANGE `distance` `distance` DECIMAL(8, 2) NOT NULL;
 -- ALTER TABLE `ExecRoutes` CHANGE `rid` `rid`INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL;

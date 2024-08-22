@@ -1,18 +1,12 @@
-'use client'
+"use client"
 
+import axios from "axios";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { parseRoute } from "../../../components/parseRoute";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 
 let id = 0;
-
-const initialTimeValues = {
-    startTime: "",
-    message: ""
-};
-
 const initialRouteData = {
     geojson: null,
     latitude: 0,
@@ -21,24 +15,19 @@ const initialRouteData = {
     distance: 0
 }
 
-export default function InsertRoute() {
+export default function EditRoute({ params }) {
     const [discardForm, setDiscardForm] = useState(false); // True, if ';' semicolon is detected in the cases below and honeypot inputs. False otherwise
     const [routeInformation, setRouteInformation] = useState(""); // Will be a string containing the route information (Format of .gpx, .geojson, or .json)
     const [routeData, setRouteData] = useState(initialRouteData);
+    const [errorMessage, setErrorMessage] = useState({
+        time: ""
+    });
 
-    const [routeText, setRouteText] = useState("");
-
-    const [time, setTime] = useState(initialTimeValues);
-    const [routeRadio, setRouteRadio] = useState(false);
     const Map = useMemo(() => dynamic(() => import('@/app/dashboard/component/Map'), { ssr: false, loading: () => <p>Loading Map and Route</p> }));
-
     const router = useRouter();
 
     async function handleSubmit(formData) {
-        if(routeData.geojson === "") {
-            alert("Route could not be processed.\nPlease select a different .gpx or .geojson file");
-            return;
-        }
+        const inputViolations = {};
 
         const title = formData.get("title").split(";")[0]; // Can be anything (expect ;)
         const difficulty = formData.get("difficulty"); // Either Beginner or Intermediate
@@ -46,14 +35,31 @@ export default function InsertRoute() {
         const startTime = formData.get("startTime"); // In 24 hour format
         const endTime = formData.get("endTime"); // In 24 hour format (Has to be greater than startTime)
 
+        if (startTime > endTime) {
+            inputViolations.time = "Has to be past Start time";
+            router.push("#time");
+        }
+
+        setErrorMessage(inputViolations);
+        
+        if (Object.keys(inputViolations).length != 0)
+            return;
+
         if(discardForm) {
-            alert("Sending you back home");
             router.push("/");
         }
 
+        console.log(title);
+        console.log(difficulty);
+        console.log(routeInformation);
+        console.log(routeData.distance);
+        console.log(date);
+        console.log(startTime);
+        console.log(endTime);
 
         try {
-            const res = await axios.post("/api/Routes/postExecRoute", {
+            const res = await axios.post("/api/Routes/postUpdateRoute", {
+                rid: params.rid,
                 title: title,
                 difficulty: difficulty,
                 gpx: routeInformation,
@@ -74,7 +80,11 @@ export default function InsertRoute() {
         const fileData = new FileReader();
         fileData.readAsText(e.target.files[0], "UTF-8");
         fileData.onload = e => {
-            const loadedRoute = e.target.result.split(";")[0];
+            const [loadedRoute, injection] = e.target.result.split(";");
+
+            if (injection)
+                setDiscardForm(true);
+
             setRouteInformation(loadedRoute);
 
             const routeInfo = parseRoute({gpx: loadedRoute});
@@ -83,74 +93,53 @@ export default function InsertRoute() {
         };
     };
 
-    function handleTimeInput(e) {
-        const { name, value } = e.target;
-        if (name === "startTime") {
-            setTime({...time, [name]: value});
-        }
-
-        if(time.startTime > value)
-            setTime({...time, ["message"]: "Has to be past Start time"});
-    }
 
     return (
         <div className="md:py-4 md:px-24 px-14 h-full">
-            <form action={handleSubmit} className="w-full p-12 flex flex-col gap-14 bg-gray-300 rounded-xl shadow-xl lg:text-[20px] text-[14px]">
-                <h1 className="-my-5 font-semibold md:text-[30px] text-[20px]">Add a Route<span className="p-2 text-[10px] md:text-[15px] text-primary-red">All required</span></h1>
+            <form action={handleSubmit} className="w-full pt-8 px-12 pb-12 flex flex-col gap-14 bg-gray-300 rounded-xl shadow-xl lg:text-[20px] text-[14px]">
+                <div className="" id="email">
+                    <h1 className="font-semibold md:text-[30px] text-[20px]">Edit Route</h1>
+                    <p className="ml-3 md:text-[20px] text-[12px]">
+                    Only make changes to the fields you want to be edited.<br />
+                    </p>
+                </div>
 
                 <section className="md:grid md:grid-cols-2 flex flex-col gap-4"> 
                     <div className="flex flex-col gap-1">
                         <label className="font-normal">Ride Title</label>
-                        <input className="bg-white w-[80%] rounded-lg shadow-md" name="title" placeholder="Ride title..." required></input>
+                        <input className="bg-white w-[80%] rounded-lg shadow-md" name="title" placeholder="Ride title..."></input>
                     </div>
                     <div className="flex flex-col gap-1">
                         <label className="pr-3 font-normal">Ride difficulty:</label>
                         <select className="p-2 w-[50%] rounded-md shadow-md" name="difficulty">
+                            <option value={""}>none</option>
                             <option value={"Beginner"}>Beginner</option>
                             <option value={"Intermediate"}>Intermediate</option>
                         </select>
                     </div>
                 </section>
-                <section className="md:grid md:grid-cols-3 flex flex-col gap-3 w-full">
+                <section className="md:grid md:grid-cols-3 flex flex-col gap-3 w-full" id="time">
                     <div className="flex flex-col gap-1">
                         <label className="font-normal">Ride date:</label>
-                        <input type="date" className="w-[80%] bg-white rounded-lg shadow-md" name="date" required></input>
+                        <input type="date" className="w-[80%] bg-white rounded-lg shadow-md" name="date" ></input>
                     </div>
                     <div className="flex flex-col gap-1">
                         <label className="font-normal">Start time:</label>
-                        <input type="time" className="w-[80%] bg-white rounded-lg shadow-md" name="startTime" label="startTime" onChange={(e) => handleTimeInput(e)} required></input>
+                        <input type="time" className="w-[80%] bg-white rounded-lg shadow-md" name="startTime" label="startTime" ></input>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="font-normal">End time: <span className="font-semibold text-primary-red lg:text-[16px] text-[10px]">{time.message}</span></label>
-                        <input type="time" className="w-[80%] bg-white rounded-lg shadow-md" name="endTime" onChange={(e) => handleTimeInput(e)} required></input>
+                        <label className="font-normal">End time: <span className="font-semibold text-primary-red lg:text-[16px] text-[10px]">{errorMessage.time}</span></label>
+                        <input type="time" className="w-[80%] bg-white rounded-lg shadow-md" name="endTime" ></input>
                     </div>
                 </section>
                 <section className="w-full flex flex-col gap-3">
-                    <h1 className="font-medium">Route: Either In File format (.gpx, .json, .geojson) or Text</h1>
-                    <div className="flex gap-10 pl-5">
-                        <div className="">
-                            <input type="radio" name="routeInput" checked={!routeRadio} onChange={() => setRouteRadio(!routeRadio)} className="w-[20px]"></input>
-                            <label className="">GPX/geojson</label>
-                        </div>
-                        <div>
-                            <input type="radio" name="routeInput" checked={routeRadio} onChange={() => setRouteRadio(!routeRadio)} className="w-[20px]"></input>
-                            <label className="">Text</label>
-                        </div>
-                    </div>
-                    {!routeRadio && (<div className="flex flex-col">
+                    <h1 className="font-medium">Route: In File format (.gpx, .json, .geojson)</h1>
+                    <div className="flex flex-col">
                         <label className="">Select a GPX or GeoJSON file (Please have a Waypoint/Point indicating the start and end positions)</label>
                         {routeData.geojson === ""? (<label className="font-semibold text-primary-red">Please select a formatted (.gpx, .geojson) file </label>) : null}
-                        <input type="file" accept=".gpx,.geojson" onChange={handleFileInput} className="w-full bg-gray-300 border-4 border-gray-300" required></input> {/* To add .json support later */}
+                        <input type="file" accept=".gpx,.geojson" onChange={handleFileInput} className="w-full bg-gray-300 border-4 border-gray-300" ></input> {/* To add .json support later */}
                         {routeInformation && <Map geoData={routeData.geojson} center={[routeData.latitude, routeData.longitude]} zoom={routeData.zoom} id={id++}/>} {/* Put label here when file cannot be read and parsed */}
-                    </div>)}
-
-                    {routeRadio && (<div className="">
-                        <h2>Text</h2>
-                        <textarea className="my-3 p-2 w-[70%] max-h-screen h-[40vh] bg-white sm:text-[10px] md:text-[15px] shadow-lg rounded-md" value={routeText} onChange={(e) => (setRouteText(e.target.value))}></textarea>
-
-                        <button></button>
-                        {routeInformation && <Map geoData={routeData.geojson} center={[routeData.latitude, routeData.longitude]} zoom={routeData.zoom} id={id++}/>}
-                    </div>)}
+                    </div>
 
                 </section>
 

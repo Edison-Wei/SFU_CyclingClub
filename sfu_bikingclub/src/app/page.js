@@ -9,7 +9,7 @@ import { month, weekDay } from "@/components/DateTimeFormat";
 import SlideShow from "@/components/Slideshow";
 import Image from "next/image";
 import Link from "next/link";
-import { parseRoute } from "./dashboard/component/parseRoute";
+import { parseRoute } from "../components/parseRoute";
 
 async function fetchUpcommingRoute() {
   try {
@@ -17,7 +17,6 @@ async function fetchUpcommingRoute() {
 
     return res.data.results;
   } catch (error) {
-    // console.error("Failed to fetch UpcomingRoute: ", error);
     const data = {
       rid: 0,
       title: "No active Rides",
@@ -69,19 +68,25 @@ export default function Home() {
       const routeinfo = res.map(route => {
         // parseGPX only works on browser(client) not on server
         const parsedRoute = parseRoute(route);
+        delete route.gpx;
+        delete route.date_created;
         return {
-          rid: route.rid,
-          title: route.title,
-          geojson: parsedRoute.geojson,
-          latitude: parsedRoute.latitude,
-          longitude: parsedRoute.longitude,
-          zoom: parsedRoute.zoom,
-          difficulty: route.difficulty,
-          distance: route.distance,
-          start_date: route.start_date,
-          start_time: route.start_time,
-          end_time: route.end_time,
+          ...route,
+          ...parsedRoute
         }
+        // return {
+        //   rid: route.rid,
+        //   title: route.title,
+        //   geojson: parsedRoute.geojson,
+        //   latitude: parsedRoute.latitude,
+        //   longitude: parsedRoute.longitude,
+        //   zoom: parsedRoute.zoom,
+        //   difficulty: route.difficulty,
+        //   distance: route.distance,
+        //   start_date: route.start_date,
+        //   start_time: route.start_time,
+        //   end_time: route.end_time,
+        // }
       });
       setRoutes(routeinfo);
     }

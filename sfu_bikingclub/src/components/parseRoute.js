@@ -24,7 +24,9 @@ export function parseRoute(route) {
         if (parsedFile.tracks.length === 0)
             throw {status: GEOJSON_PARSER_STATUS, reason: "Not a GPX file, parsing with JSON.parse"};
 
-        const totalDistance = parsedFile.tracks[0].distance.total;
+        let totalDistance = parsedFile.tracks[0].distance.total;
+        totalDistance = (totalDistance > 1000? totalDistance/1000 : totalDistance);
+        totalDistance = Math.round(totalDistance * 100) / 100;
         const pointOne = parsedFile.tracks[0].points[0];
         const pointTwo = parsedFile.tracks[0].points[parsedFile.tracks[0].points.length-1];
 
@@ -135,6 +137,7 @@ function CalculateGeojson(GeoJSON) {
         lat1 = (pointOne[1] + pointTwo[1]) / 2;
         lng1 = (pointOne[0] + pointTwo[0]) / 2;
     })
+    distance = Math.round(distance * 100) / 100;
 
     return { "totalDistance": distance, "latitude": lat1, "longitude": lng1, "zoom": zoom };
 }

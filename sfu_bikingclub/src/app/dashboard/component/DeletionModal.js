@@ -1,37 +1,23 @@
-export default function DeletionModal({ routeinfo, setShowModal, handleDeleteRoute }) {
+export default function DeletionModal({ routeinfo, setShowDeletionModal, handleDeleteRoute }) {
     const handleClose = () => {
-        setShowModal(false);
+        setShowDeletionModal(false);
     }
 
     return (
-            <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black bg-opacity-40" onClick={handleClose}>
-
-                <div className="flex min-h-full w-1/2 items-end justify-center text-center sm:items-center sm:p-0">
-                    <div className="relative transform sm:p-6 md:p-8 lg:p-10 overflow-hidden rounded-lg bg-white text-left shadow-xl sm:my-8 sm:w-full sm:max-w-md md:max-w-xl">
-                        <div className="pb-6 sm:text-[15px] md:text-[20px] lg:text-[25px]">
-                            {`Are you sure you want to delete this route? '${routeinfo.title}?'`}
-                        </div>
-                        <div className="flex justify-around p-2 sm:text-[12px] md:text-[15px] lg:text-[20px]">
-                            <button onClick={() => handleDeleteRoute(routeinfo.id)} className="p-1.5 rounded-md bg-red-500 hover:bg-primary-red">Delete Route</button>
-                            <button onClick={handleClose} className="underline underline-offset-2">Close</button>
-                        </div>
+        <div className="fixed inset-0 z-20 flex justify-center md:grid md:grid-cols-2 md:justify-items-center items-center bg-gray-600 bg-opacity-40" onClick={handleClose}>
+            <div className="ml-4 bg-white border-2 border-primary-red rounded-md">
+                <div className="rounded-lg p-4 md:p-6 lg:p-8 shadow-xl text-center">
+                    <h2 className="pb-6 sm:text-[15px] md:text-[20px] lg:text-[25px]">
+                        {`Are you sure you want to delete this route?`}
+                        <br/>
+                        "{routeinfo.title}"?
+                    </h2>
+                    <div className="flex justify-around p-2 text-[12px] md:text-[15px] lg:text-[20px]">
+                        <button onClick={() => handleDeleteRoute(routeinfo.rid)} className="p-1.5 rounded-md underline underline-offset-2 bg-red-500 hover:bg-primary-red">Delete Route</button>
+                        <button onClick={handleClose} className="underline underline-offset-2 hover:opacity-40">Close</button>
                     </div>
                 </div>
             </div>
-
-        // <div className="fixed inset-0 w-full flex items-center justify-center z-50 bg-black bg-opacity-50" onClick={() => setShowModal(!showModal)}>
-        //     <div className="p-1.5 bg-gradient-to-b from-[#7CC5FA] to-[#5A20BA] rounded-[53.39px]">
-        //         <div className="py-6 px-8 bg-white rounded-[53.39px] shadow-lg">
-    
-        //             <div className="flex justify-end">
-        //                 <button className="text-2xl text-gray-500 hover:text-gray-700">
-        //                     &#9932;
-        //                 </button>
-        //             </div>
-    
-        //             {children}
-        //         </div>
-        //     </div>
-        // </div>
+        </div>
     )
 }
