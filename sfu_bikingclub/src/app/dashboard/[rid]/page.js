@@ -23,7 +23,7 @@ export default function EditRoute({ params }) {
         time: ""
     });
 
-    const Map = useMemo(() => dynamic(() => import('@/app/dashboard/component/Map'), { ssr: false, loading: () => <p>Loading Map and Route</p> }));
+    const Map = dynamic(() => import('@/app/dashboard/component/Map'), { ssr: false, loading: () => <p>Loading Map and Route</p> });
     const router = useRouter();
 
     async function handleSubmit(formData) {

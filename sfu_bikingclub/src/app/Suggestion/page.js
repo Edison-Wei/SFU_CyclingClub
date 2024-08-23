@@ -1,6 +1,6 @@
 "use client"
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { parseRoute } from "../../components/parseRoute";
 import { useRouter } from "next/navigation";
 import Header from "../../components/Header";
@@ -27,7 +27,9 @@ export default function Suggestion() {
     const [showSubmitted, setShowSubmitted] = useState(false);
 
     const [routeRadio, setRouteRadio] = useState(false);
-    const Map = useMemo(() => dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Loading Map and Route</p> }));
+    const Map = dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Loading Map and Route</p> });
+
+
     const router = useRouter();
 
     async function handleSubmit(formdata) {

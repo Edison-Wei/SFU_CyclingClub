@@ -2,7 +2,7 @@
 import Hero from "@/components/Hero";
 import Header from "../components/Header";
 import TextWithButton from "../components/TextWithButton";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { month, weekDay } from "@/components/DateTimeFormat";
@@ -60,7 +60,8 @@ function DisplayInformation({ routeInfo }) {
 export default function Home() {
   const [routes, setRoutes] = useState();
   const [selection, setSelection] = useState(0);
-  const Map = useMemo(() => dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Loading Map</p> }))
+  const Map = dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Loading Map and Route</p> });
+
 
 
   useEffect(() => {

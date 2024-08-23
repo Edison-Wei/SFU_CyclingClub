@@ -105,8 +105,6 @@ export default function Dashboard() {
       setInterRoute(resultIR);
       setBeginRoute(resultBR);
     })
-    if (interRoute > 0)
-      setSelectedRoute(interRoute[0]);
   }, []);
 
   async function handleDeleteRoute(rid) {
@@ -116,13 +114,11 @@ export default function Dashboard() {
         throw {error: "Error: Route did not delete"};
 
       if (selection === 0) {
-        setInterRoute(interRoute.filter(route => route !== selectedRoute))
+        setInterRoute(interRoute.filter(route => route !== selectedRoute));
       }
       else {
         setBeginRoute(beginRoute.filter(route => route !== selectedRoute));
       }
-      console.log(interRoute);
-      console.log(beginRoute);
   
       return res;
     } catch (error) {
@@ -137,7 +133,7 @@ export default function Dashboard() {
     <div className="">
       {showDeletionModal && <DeletionModal routeinfo={selectedRoute} setShowDeletionModal={setShowDeletionModal} handleDeleteRoute={handleDeleteRoute} />}
       <div className="flex h-screen p-4 sm:text-[12px] md:text-[16px] lg:text-[20px]">
-        <div className="w-1/2 h-full flex flex-col items-center pr-3">
+        <div className="w-2/3 h-full flex flex-col items-center pr-3">
           <div className="flex justify-around gap-2 pb-2">
             Filters:
             <button onClick={() => { setSelection(0); setSelectedRoute(interRoute.length === 0? initialSelectedRoute : interRoute[0]); }} className={`py-0.5 px-1 ${selection == 0 ? "bg-gray-400" : "bg-gray-300"} hover:bg-gray-400 rounded-lg sm:text-[12px] md:text-[14px] lg:text-[18px]`}>Intermediate</button>

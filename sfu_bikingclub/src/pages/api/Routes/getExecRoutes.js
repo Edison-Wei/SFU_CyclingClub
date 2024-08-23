@@ -1,5 +1,4 @@
 import mysql from 'mysql2/promise';
-import { NextResponse, NextRequest } from "next/server";
 import connectionCredentials from '../../../app/utils/dbConnection';
 
 export default async function handler(req, res) {
@@ -23,7 +22,7 @@ export default async function handler(req, res) {
         res.status(200).json({ resultsIR, resultsBR });
 
     } catch (error) {
-        console.error("Error in StravaRides: ", error);
+        console.error("Error in getExecRoutes: ", error);
         res.status(500).json({ error: error.message })
     }
 }

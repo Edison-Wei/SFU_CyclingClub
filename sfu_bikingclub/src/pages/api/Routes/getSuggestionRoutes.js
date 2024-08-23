@@ -1,6 +1,5 @@
 import connectionCredentials from '../../../app/utils/dbConnection';
 import mysql from 'mysql2/promise';
-import { NextResponse, NextRequest } from "next/server";
 
 export default async function handler(req, res) {
     if (req.method !== "GET") {
@@ -10,18 +9,16 @@ export default async function handler(req, res) {
     try {
         const connection = await mysql.createConnection(connectionCredentials("route"));
 
-        let get_exp_query = "SELECT * FROM CyclingRoutes.MemberRoutes";
+        const queryRouteSuggestion = "SELECT * FROM CyclingRoutes.RouteSuggestions";
 
-        let values = [];
-
-        const [results] = await connection.execute(get_exp_query, values);
+        const [results] = await connection.execute(queryRouteSuggestion);
 
         connection.end();
         // fields: fields.map(f => f.name)
         res.status(200).json({ results });
 
     } catch (error) {
-        console.error("Error in StravaRides: ", error);
+        console.error("Error in getSuggestionRoute: ", error);
         res.status(500).json({ error: error.message })
     }
 }

@@ -4,8 +4,6 @@ import "leaflet/dist/leaflet.css"
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
-navigator.vibrate([200])
-
 // Lazy-loaded MapContainer for SSR
 const LazyMapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
   ssr: false

@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { parseRoute } from "../../../components/parseRoute";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -30,7 +30,9 @@ export default function InsertRoute() {
 
     const [time, setTime] = useState(initialTimeValues);
     const [routeRadio, setRouteRadio] = useState(false);
-    const Map = useMemo(() => dynamic(() => import('@/app/dashboard/component/Map'), { ssr: false, loading: () => <p>Loading Map and Route</p> }));
+    const Map = dynamic(() => import('@/app/dashboard/component/Map'), { ssr: false, loading: () => <p>Loading Map and Routes</p> });
+
+
 
     const router = useRouter();
 
