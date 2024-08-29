@@ -11,24 +11,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { parseRoute } from "../components/parseRoute";
 
+const initialRoute = [
+  {
+    difficulty: "",
+    distance: 0,
+    end_time: "",
+    geojson: "",
+    latitude: 49.2790223,
+    longitude: -122.9201949,
+    rid: 0,
+    start_date: "",
+    start_time: "",
+    title: "",
+    zoom: 11.5
+  }
+]
+
 async function fetchUpcommingRoute() {
   try {
     const res = await axios.get(`/api/Routes/getUpcomingRoute`);
 
     return res.data.results;
   } catch (error) {
-    const data = {
-      rid: 0,
-      title: "No active Rides",
-      gpx: "",
-      difficulty: "Not Available",
-      distance: 0,
-      start_date: "1965-09-09T07:00:00.000Z",
-      start_time: "00:00",
-      end_time: "00:00"
-    }
+    const errorRes = error.response.data.results;
 
-    return [data, data];
+    return errorRes;
   }
 }
 
@@ -57,11 +64,11 @@ function DisplayInformation({ routeInfo }) {
   )
 }
 
+
 export default function Home() {
-  const [routes, setRoutes] = useState();
+  const [routes, setRoutes] = useState(initialRoute);
   const [selection, setSelection] = useState(0);
   const Map = dynamic(() => import('@/components/Map'), { ssr: false, loading: () => <p>Loading Map and Route</p> });
-
 
 
   useEffect(() => {
@@ -75,6 +82,7 @@ export default function Home() {
           ...route,
           ...parsedRoute
         }
+        // Just a reminder of the output
         // return {
         //   rid: route.rid,
         //   title: route.title,
@@ -93,6 +101,7 @@ export default function Home() {
     }
   );
   }, []);
+
 
   function onclick(info) {
     switch (info) {
@@ -132,10 +141,10 @@ export default function Home() {
             />
             <ul className="grid grid-cols-2 w-full justify-items-center text-[14px] md:text-[18px]">
               <li>
-                <button onClick={() => onclick("intermediate")} className={`underline hover:text-primary-red`}>Intermediate</button>
+                <button onClick={() => setSelection(0)} className={`underline hover:text-primary-red`}>Intermediate</button>
               </li>
               <li>
-                <button onClick={() => onclick("beginner")} className={`underline hover:text-primary-red`}>Beginner</button>
+                <button onClick={() => setSelection(1)} className={`underline hover:text-primary-red`}>Beginner</button>
               </li>
             </ul>
             {routes && <DisplayInformation routeInfo={routes[selection]} />}
@@ -147,6 +156,7 @@ export default function Home() {
             </div>
             <div className="w-full max-w-full overflow-hidden">
               {routes && <Map geoData={routes[selection].geojson} center={[routes[selection].latitude, routes[selection].longitude]} zoom={routes[selection].zoom} id={selection} />}
+              {/* <Map geoData={routes[selection].geojson} center={[routes[selection].latitude, routes[selection].longitude]} zoom={routes[selection].zoom} id={selection} /> */}
             </div>
             <Link href={"./Suggestion"} className="md:pt-4 md:px-4 underline hover:text-primary-red">{"Make a Suggestion"}</Link>
           </div>

@@ -12,7 +12,6 @@ export default async function handler(req, res) {
 
         const queryIR = `SELECT * FROM CyclingRoutes.ExecRoutes WHERE difficulty = "intermediate"`;
         const queryBR = `SELECT * FROM CyclingRoutes.ExecRoutes WHERE difficulty = "beginner"`;
-        // const queryRoute = `SELECT * FROM CyclingRoutes.ExecRoutes WHERE difficulty = "$intermediate$ "`;
 
         const [resultsIR] = await connection.execute(queryIR);
         const [resultsBR] = await connection.execute(queryBR);
@@ -23,6 +22,6 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error("Error in getExecRoutes: ", error);
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: error.message });
     }
 }

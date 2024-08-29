@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link";
 
 function RouteSuggestionLayout({ routeinfo, setSelectedRoute, setShowDeletionModal }) {
 
@@ -16,6 +17,9 @@ function RouteSuggestionLayout({ routeinfo, setSelectedRoute, setShowDeletionMod
                 </p>
             </button>
             <div className="flex flex-col items-center">
+                <Link href={{pathname: `member/add`, query: {sid: routeinfo.sid}}} className="pb-1 z-10 hover:font-bold">
+                    Add
+                </Link>
                 <button onClick={() => setShowDeletionModal(true)} className="z-10 hover:brightness-200">
                     <Image src={"/crossmark.svg"} alt="Delete" height={18} width={18} />
                     {/* &#10060; */}

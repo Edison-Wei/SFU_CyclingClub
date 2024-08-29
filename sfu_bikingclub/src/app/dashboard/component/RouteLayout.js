@@ -1,8 +1,7 @@
 import Image from "next/image"
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function RouteLayout({ routeinfo, setSelectedRoute, setShowDeletionModal }) {
-    const router = useRouter();
 
     return (
         <div className="min-h-16 max-h-32 px-2 flex items-center border-b-2 border-primary-red sm:text-[10px] md:text-[16px] lg:text-[18px] hover:bg-gray-400">
@@ -21,9 +20,9 @@ function RouteLayout({ routeinfo, setSelectedRoute, setShowDeletionModal }) {
                 </p>
             </button>
             <div className="flex flex-col items-center">
-                <button onClick={() => router.push(`/dashboard/${routeinfo.rid}`)} className="pb-1 z-10 hover:font-bold">
+                <Link href={{pathname: `/dashboard/edit`, query: {rid: routeinfo.rid}}} className="pb-1 z-10 hover:font-bold">
                     Edit
-                </button>
+                </Link>
                 <button onClick={() => setShowDeletionModal(true)} className="z-10 hover:brightness-200">
                     <Image src={"/crossmark.svg"} alt="Delete" height={18} width={18} />
                     {/* &#10060; */}
