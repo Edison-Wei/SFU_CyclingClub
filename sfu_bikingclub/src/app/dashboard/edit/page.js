@@ -3,7 +3,7 @@
 import axios from "axios";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { parseRoute } from "../../../components/parseRoute";
 
 let id = 0;
@@ -38,7 +38,7 @@ async function fetchRouteInfo(rid) {
       }
 }
 
-export default function EditRoute() {
+function EditRoute() {
     const [discardForm, setDiscardForm] = useState(false); // True, if ';' semicolon is detected in the cases below and honeypot inputs. False otherwise
     const [cuurrentRoute, setCurrentRoute] = useState(initialCurrentRoute);
     const [routeInformation, setRouteInformation] = useState(""); // Will be a string containing the route information (Format of .gpx, .geojson, or .json)
@@ -187,4 +187,12 @@ export default function EditRoute() {
             </form>
         </div>
     );
+}
+
+export default function Page() {
+    return (
+        <Suspense>
+            <EditRoute />
+        </Suspense>
+    )
 }

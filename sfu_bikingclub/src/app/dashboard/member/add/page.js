@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { parseRoute } from "@/components/parseRoute";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -34,7 +34,7 @@ async function fetchRouteSuggestion(sid) {
     }
 }
 
-export default function AddSuggestionRoute() {
+function AddSuggestionRoute() {
     const params = useSearchParams().get("sid");
     const [discardForm, setDiscardForm] = useState(false); // True, if ';' semicolon is detected in the cases below and honeypot inputs. False otherwise
     const [routeSuggestion, setRouteSuggestion] = useState(initialRouteSuggestion);
@@ -157,4 +157,12 @@ export default function AddSuggestionRoute() {
             </form>
         </div>
     );
+}
+
+export default function Page() {
+    return (
+        <Suspense>
+            <AddSuggestionRoute />
+        </Suspense>
+    )
 }
