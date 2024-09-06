@@ -86,7 +86,7 @@ function EditRoute() {
 
         try {
             const res = await axios.post("/api/Routes/postUpdateRoute", {
-                rid: params.rid,
+                rid: params,
                 title: title,
                 difficulty: difficulty,
                 gpx: routeInformation,
@@ -170,7 +170,7 @@ function EditRoute() {
                     <div className="flex flex-col">
                         <label className="">Select a GPX or GeoJSON file (Please have a Waypoint/Point indicating the start and end positions)</label>
                         {routeData.geojson === ""? (<label className="font-semibold text-primary-red">Please select a formatted (.gpx, .geojson) file </label>) : null}
-                        <input type="file" accept=".gpx,.geojson" onChange={handleFileInput} className="md:w-1/2 w-full bg-gray-300 border-4 border-gray-300" required></input> {/* To add .json support later */}
+                        <input type="file" accept=".gpx,.geojson" onChange={handleFileInput} className="md:w-1/2 w-full bg-gray-300 border-4 border-gray-300"></input> {/* To add .json support later */}
                         {routeInformation && <Map geoData={routeData.geojson} center={[routeData.latitude, routeData.longitude]} zoom={routeData.zoom} id={id++}/>} {/* Put label here when file cannot be read and parsed */}
                     </div>
 

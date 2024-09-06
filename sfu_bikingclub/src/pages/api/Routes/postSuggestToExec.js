@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
         connection.end();
 
-        res.status(200).json({ result: "Suggested Route has been inserted to Exec Routes"});
+        res.status(200).json({ result: "Suggested Route has been added to Exec Route list"});
 
     } catch (error) {
         console.error("Error in postSuggestToExec: ", error);

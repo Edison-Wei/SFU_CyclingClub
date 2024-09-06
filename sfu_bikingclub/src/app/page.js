@@ -15,13 +15,13 @@ const initialRoute = [
   {
     difficulty: "",
     distance: 0,
-    end_time: "",
     geojson: "",
     latitude: 49.2790223,
     longitude: -122.9201949,
     rid: 0,
-    start_date: "",
-    start_time: "",
+    start_date: "1965-09-09T07:00:00.000Z",
+    start_time: "00:00",
+    end_time: "00:00",
     title: "",
     zoom: 11.5
   }
@@ -43,8 +43,8 @@ function DisplayInformation({ routeInfo }) {
   const startdate = new Date(routeInfo.start_date);
 
   return (
-    <div className="grid grid-rows-5 gap-4 p-6 text-[16px] md:text-[20px] font-semibold">
-      <span className="place-self-center p-2 md:text-[22px] font-bold underline underline-offset-2">
+    <div className="grid grid-rows-5 gap-4 p-2 md:p-4 lg:p-6 text-[16px] md:text-[18px] lg:text-[20px] font-semibold">
+      <span className="place-self-center p-2 md:text-[22px] font-bold">
         {routeInfo.title.toUpperCase()}
       </span>
       <div>
@@ -103,17 +103,6 @@ export default function Home() {
   }, []);
 
 
-  function onclick(info) {
-    switch (info) {
-      case "beginner":
-        setSelection(1);
-        break;
-      default:
-        setSelection(0);
-        break;
-    }
-  }
-
   return (
     <div className="">
       <Header />
@@ -154,11 +143,10 @@ export default function Home() {
             <div className="hidden md:block mb-4 md:text-[20px]">
               Upcoming Ride
             </div>
-            <div className="w-full max-w-full overflow-hidden">
-              {routes && <Map geoData={routes[selection].geojson} center={[routes[selection].latitude, routes[selection].longitude]} zoom={routes[selection].zoom} id={selection} />}
-              {/* <Map geoData={routes[selection].geojson} center={[routes[selection].latitude, routes[selection].longitude]} zoom={routes[selection].zoom} id={selection} /> */}
+            <div className="md:h-[40vh] w-[35vh] lg:h-[75vh] lg:w-[80vh]">
+                {routes && <Map geoData={routes[selection].geojson} center={[routes[selection].latitude, routes[selection].longitude]} zoom={routes[selection].zoom} id={selection} />}
             </div>
-            <Link href={"./Suggestion"} className="md:pt-4 md:px-4 underline hover:text-primary-red">{"Make a Suggestion"}</Link>
+            <Link href={"./Suggestion"} className="md:pt-4 md:px-4 h-full underline hover:text-primary-red">{"Make a Suggestion"}</Link>
           </div>
         </div>
       </div>

@@ -67,6 +67,8 @@ export default function Suggestion() {
             return;
         }
 
+        console.log(email);
+
         try {
             await axios.post("/api/Routes/postSuggestRoute", {
                 created_by: email,
@@ -126,7 +128,7 @@ export default function Suggestion() {
 
                 <section className="flex flex-col">
                     <div className="flex flex-col gap-1">
-                        <label className="font-medium">SFU Email <span className="text-primary-red font-semibold">{errorMessage.email}</span></label>
+                        <label className="font-medium">SFU Email <span className="text-primary-red font-semibold text-[14px] md:text-[18px]">{errorMessage.email}</span></label>
                         <input className={`bg-white w-[80%] md:w-[50%] rounded-lg ${errorMessage.email? "border-2 border-primary-red shadow-xl" : "shadow-md"}`} name="email" placeholder="abc01@sfu.ca" required></input>
                     </div>
                     {/* To handle unwanted forms */}
@@ -152,7 +154,7 @@ export default function Suggestion() {
                     </div>
                     {!routeRadio && (<div className="flex flex-col">
                         <label className="">Select a GPX or GeoJSON file (have a Waypoint/Point indicating the start and end positions)</label>
-                        {routeData.geojson === ""? (<label className="font-semibold text-primary-red">File processing failed. Please try another file or check the file format.</label>) : <label className="font-semibold">Then, check the map below to verify that the route has been correctly processed.</label>}
+                        {routeData.geojson === ""? (<label className="font-semibold text-primary-red text-[13px] md:text-[18px]">Could not process file. Please try another file or check the file format.</label>) : <label className="font-semibold">Then, check the map below to verify that the route has been correctly processed.</label>}
                         <input type="file" accept=".gpx,.geojson" onChange={handleFileInput} className="md:w-1/2 w-full bg-gray-300 border-4 border-gray-300" required></input> {/* To add .json support later */}
                         {routeInformation &&
                         <div className="relative md:h-[40vh] w-[45vh] lg:h-[75vh] lg:w-[90vh] bg-gray-300">

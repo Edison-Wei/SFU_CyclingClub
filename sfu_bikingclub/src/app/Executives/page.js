@@ -133,7 +133,7 @@ const execs = [
         name: "Edison",
         position: "Tech Lead",
         image: "/logo.jpg",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerci"
+        description: "Hello everyone!! I’m Edison, a Health Science student pursuing Computer Science. My journey began with a small Dell PC that I extensively used for playing, learning, and getting to know the internal hardware. Down the road, my curiosity led me to the health sector, where I grew an interest, but did not know the end goal. After some time creating this site and various other projects, I realized I should have switched to computer science. Some activities I like to do in my spare time are running, hiking, and bouldering. I am thrilled to be one of the executives and looking forward to meeting new people who share a passion for cycling!"
     },
     {
         name: "Claire",

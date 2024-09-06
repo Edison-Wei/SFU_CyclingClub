@@ -75,9 +75,10 @@ function AddSuggestionRoute() {
         }
 
 
+
         try {
             const res = await axios.post("/api/Routes/postSuggestToExec", {
-                sid: routeSuggestion.sid,
+                sid: params,
                 title: title,
                 difficulty: difficulty,
                 gpx: routeInformation,
@@ -87,7 +88,7 @@ function AddSuggestionRoute() {
                 end_Time: endTime,
             });
 
-            alert((await res).data.result + "\nSending you back to Member Suggested Routes");
+            alert((await res).data.result + "\nSending you back to the Member Suggested Routes");
             router.push("/dashboard/member");
         } catch (error) {
             alert(error.response.data.error);
