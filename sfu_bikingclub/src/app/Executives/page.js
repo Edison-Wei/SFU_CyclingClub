@@ -140,12 +140,6 @@ const execs = [
         position: "Tech Lead",
         image: "/logo.jpg",
         description: "Hi! My name is Claire Shou and I am a third-year computer science student. In my first year of university I studied health science, where I explored my passion for healthcare and physical wellness. I then discovered my passion for technology, where I transferred to studying computer science. I hope to intersect my two passions for healthcare and technology in my future career. In my free time, I enjoy spending as much time as possible outdoors, whether it's snowboarding in the winter or paddle-boarding and biking in the summer! I am excited to connect with more people during my time involved with the SFU Cycling Club!"
-    },
-    {
-        name: "James",
-        position: "Treasurer",
-        image: "/logo.jpg",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod .",
     }
 ]
 
