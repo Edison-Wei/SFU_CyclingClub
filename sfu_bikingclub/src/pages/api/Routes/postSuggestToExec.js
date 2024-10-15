@@ -7,6 +7,8 @@ export default async function handler(req, res) {
     }
 
     try {
+        // TODO: Slice gpx/geojson points/markers given by members 
+
         const { sid, title, difficulty, gpx, distance, start_Date, start_Time, end_Time } = req.body;
 
         const connection = await mysql.createConnection(connectionCredentials("route"));

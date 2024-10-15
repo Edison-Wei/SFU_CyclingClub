@@ -13,6 +13,11 @@ function SetViewOnClick({ coords, zoom }) {
   return null;
 }
 
+function onEachFeature(feature, layer) {
+  // console.log(feature);
+  // console.log(layer);
+}
+
 // Have the map rerender with the new geoData
 // geoJsonRef is the identifier
 function RouteData({ geoJsonRef, geoData }) {
@@ -23,7 +28,7 @@ function RouteData({ geoJsonRef, geoData }) {
     }
   }, [geoData]);
 
-  return <GeoJSON ref={geoJsonRef} data={geoData.features} style={{color: "black"}}/>;
+  return <GeoJSON ref={geoJsonRef} data={geoData.features} style={{color: "black"}} onEachFeature={onEachFeature}/>;
 }
 
 // // To resize the container based on the users Screen Size
@@ -46,17 +51,19 @@ function RouteData({ geoJsonRef, geoData }) {
  * 
  * @param geoData a geoJSON file given (Not a stringify JSON)
  * @param center a [lat, lng] coordinates specifying the center of the start and end points
- * @param zoom a scale from (0 space - 10 city)
+ * @param zoom a scale from (0 space - 11 city)
  * @param id a id of the route to reload the map
  * @returns a Leaflet map using the 'center' and 'zoom' to focus on the geoJSON route
  */
 export default function Map({ geoData, center, zoom }) {
   const geoJsonRef = useRef();
-
+  console.log(geoData);
+  console.log(center);
+  console.log(zoom);
 
   return (
     <div className="md:h-[40vh] w-[45vh] lg:h-[75vh] lg:w-[80vh] md:w-0-[40vh]">
-      <MapContainer center={center} zoom={zoom} size={{width: "100", height: "100"}} minZoom={10}  className="h-full w-full z-0">
+      <MapContainer center={center} zoom={zoom} size={{width: "100", height: "100"}}  className="h-full w-full z-0">
         <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"/>
           {/* Will be forced to rerender the geoJson route when a new one is selected. Can put a key tag to force a rerender of the map */}

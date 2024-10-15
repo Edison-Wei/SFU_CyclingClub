@@ -1,17 +1,16 @@
 import { parseGPX } from "@we-gold/gpxjs";
-
-export const FILE_NOT_READ = 601; // The given file could not be parsed by the parseGPX
-export const GEOJSON_PARSER_STATUS = 602; // This will indicate that the gpx data is of GeoJSON
+import { FILE_NOT_READ, GEOJSON_PARSER_STATUS } from "./errorCodes/errorCodes";
 
 export function parseRoute(route) {
 
-    if(route.gpx === "") {
+    if (route.gpx === "") {
         return {
+            geojson: "",
+            distance: 0,
             latitude: 49.2790223,
             longitude: -122.9201949,
-            zoom: 11.5,
-            totalDistance: 0,
-            geojson: ""
+            elevation: 0,
+            zoom: 11.5
         }
     }
 
@@ -19,55 +18,42 @@ export function parseRoute(route) {
         const [parsedFile, error] = parseGPX(route.gpx);
 
         if (error)
-            throw {status: FILE_NOT_READ, reason: "GPX file could not be read"};
+            throw { status: FILE_NOT_READ, reason: "GPX file could not be read" };
 
         if (parsedFile.tracks.length === 0)
-            throw {status: GEOJSON_PARSER_STATUS, reason: "Not a GPX file, parsing with JSON.parse"};
+            throw { status: GEOJSON_PARSER_STATUS, reason: "Not a GPX file, parsing with JSON.parse" };
 
-        let totalDistance = parsedFile.tracks[0].distance.total;
-        totalDistance = (totalDistance > 1000? totalDistance/1000 : totalDistance);
-        totalDistance = Math.round(totalDistance * 100) / 100;
-        const pointOne = parsedFile.tracks[0].points[0];
-        const pointTwo = parsedFile.tracks[0].points[parsedFile.tracks[0].points.length-1];
-
-        // Calculate zoom distance (0 space - 10 cities)
-        const tan = Math.tan(45);
-        let lat = pointOne.latitude - pointTwo.latitude;
-        lat = (lat < 0? lat*-1: lat);
-        let lng = pointOne.longitude - pointTwo.longitude;
-        lng = (lng < 0? lng*-1: lng);
-        const zoom = 12 - (lat > lng? lat * tan : lng * tan);
-
-        // Calculate the center of pointOne and pointTwo
-        lat = (pointOne.latitude + pointTwo.latitude)/2;
-        lng = (pointOne.longitude + pointTwo.longitude)/2;
+        const GeoJSON = CalculateGeojson(parsedFile.toGeoJSON());
 
         return {
-            latitude: lat,
-            longitude: lng,
-            zoom: zoom,
-            distance: totalDistance,
-            geojson: parsedFile.toGeoJSON()
+            geojson: GeoJSON.geojson,
+            distance: GeoJSON.totalDistance,
+            latitude: GeoJSON.latitude,
+            longitude: GeoJSON.longitude,
+            elevation: GeoJSON.elevation,
+            zoom: GeoJSON.zoom
         };
     } catch (error) {
         try {
             if (error.status === FILE_NOT_READ)
                 throw error;
 
-            const GeoJSON = JSON.parse(route.gpx);
-            if (GeoJSON.type != "Feature" && GeoJSON.type != "FeatureCollection")
+            const parsedFile = JSON.parse(route.gpx);
+            if (parsedFile.type != "Feature" && parsedFile.type != "FeatureCollection")
                 throw error.reason;
 
-            const jsonData = CalculateGeojson(GeoJSON);
-            if (!jsonData)
+            const GeoJSON = CalculateGeojson(parsedFile);
+
+            if (!GeoJSON)
                 throw new Error("Could not calculateGeojson: " + error.reason);
 
             return {
-                geojson: GeoJSON,
-                distance: jsonData.totalDistance,
-                latitude: jsonData.latitude,
-                longitude: jsonData.longitude,
-                zoom: jsonData.zoom,
+                geojson: GeoJSON.geojson,
+                distance: GeoJSON.totalDistance,
+                latitude: GeoJSON.latitude,
+                longitude: GeoJSON.longitude,
+                elevation: GeoJSON.elevation,
+                zoom: GeoJSON.zoom
             }
         } catch (error) {
             return {
@@ -75,7 +61,9 @@ export function parseRoute(route) {
                 distance: 0,
                 latitude: 49.2790223,
                 longitude: -122.9201949,
+                elevation: 0,
                 zoom: 11.5,
+                error: error
             }
         }
     }
@@ -94,51 +82,102 @@ function CalculateGeojson(GeoJSON) {
     if (GeoJSON.features.length > 3)
         return null;
 
+    const points = {
+        right: GeoJSON.features[0].geometry.coordinates[0][0],
+        left: GeoJSON.features[0].geometry.coordinates[0][0],
+        top: GeoJSON.features[0].geometry.coordinates[0][1],
+        bottom: GeoJSON.features[0].geometry.coordinates[0][1]
+    };
     const Radius = 6371; // Radius of Earth in km
 
-    let distance = 0; // in km
-    let zoom = 12; // 0 space - 10 cities
+    let totalDistance = 0; // in km
+    let zoom = 13; // 0 space - 11 cities
 
     let lng1;
     let lat1;
+    let prevElev;
+    let totalElevation = 0;
+    const pointsLength = GeoJSON.features[0].geometry.coordinates.length - 1;
 
-    GeoJSON.features.map((feature) => {
+    for (const feature of GeoJSON.features) {
         if (feature.geometry.type != "LineString")
-            return null;
+            continue;
 
+        lng1 = feature.geometry.coordinates[0][0] * (Math.PI / 180);
+        lat1 = feature.geometry.coordinates[0][1] * (Math.PI / 180);
+        prevElev = feature.geometry.coordinates[0][2];
 
-        lng1 = feature.geometry.coordinates[0][0] * (Math.PI/180);
-        lat1 = feature.geometry.coordinates[0][1] * (Math.PI/180);
+        for (const [lng, lat, elev] of feature.geometry.coordinates) {
 
-        feature.geometry.coordinates.map((point) => {
-            const lng2 = point[0] * (Math.PI/180);
-            const lat2 = point[1] * (Math.PI/180);
+            // Check RightLngCoords
+            if (points.right < lng)
+                points.right = lng;
+            // Check LeftLngCoords
+            if (points.left > lng)
+                points.left = lng;
+            // Check TopLatCoords
+            if (points.top < lat)
+                points.top = lat;
+            // Check BottomLatCoords
+            if (points.bottom > lat)
+                points.bottom = lat;
 
-            const x = (lng2 - lng1) * Math.cos((lat1 + lat2)/2);
+            // Calculate Elevation gain/loss point to point
+            totalElevation += elev - prevElev;
+            prevElev = elev;
+
+            // Used to calculate totalDistance from previous point to current point
+            const lng2 = lng * (Math.PI / 180);
+            const lat2 = lat * (Math.PI / 180);
+
+            const x = (lng2 - lng1) * Math.cos((lat1 + lat2) / 2);
             const y = lat2 - lat1;
-            distance = distance + Math.sqrt(x*x + y*y) * Radius;
+            totalDistance = totalDistance + Math.sqrt(x * x + y * y) * Radius;
             lng1 = lng2;
             lat1 = lat2;
-        })
-        // calc center and zoom
-        const length = feature.geometry.coordinates.length-1;
-        const pointOne = feature.geometry.coordinates[0];
-        const pointTwo = feature.geometry.coordinates[length];
+        }
+    }
+    totalDistance = Math.round(totalDistance * 100) / 100;
 
-        // Calculate zoom distance (0 space - 10 cities)
-        const tan = Math.tan(45);
-        lat1 = pointOne[1] - pointTwo[1];
-        lat1 = (lat1 < 0 ? lat1 * -1 : lat1);
-        lng1 = pointOne[0] - pointTwo[0];
-        lng1 = (lng1 < 0 ? lng1 * -1 : lng1);
-        zoom = zoom - (lat1 > lng1 ? lat1 * tan : lng1 * tan);
+    // Calculate zoom distance (0 space - 11 cities)
+    zoom = zoom - Math.log10(totalDistance);
 
-        // Calculate the center of pointOne and pointTwo
-        lat1 = (pointOne[1] + pointTwo[1]) / 2;
-        lng1 = (pointOne[0] + pointTwo[0]) / 2;
-    })
-    distance = Math.round(distance * 100) / 100;
+    // Calculate the center of pointOne and pointTwo
+    const lat = (points.top + points.bottom) / 2;
+    const lng = (points.right + points.left) / 2;
 
-    return { "totalDistance": distance, "latitude": lat1, "longitude": lng1, "zoom": zoom };
+    // Push two Points into the geojson
+    // One for a Start Marker
+    // One for a End Marker
+    GeoJSON.features.push({
+        "type": "Feature",
+        "properties": { startPoint: "Starting/Meeting Point" },
+        "geometry": {
+            "coordinates": [
+                GeoJSON.features[0].geometry.coordinates[0][0],
+                GeoJSON.features[0].geometry.coordinates[0][1]
+            ],
+            "type": "Point"
+        }
+    });
+    GeoJSON.features.push({
+        "type": "Feature",
+        "properties": { endPoint: "Ending Point" },
+        "geometry": {
+            "coordinates": [
+                GeoJSON.features[0].geometry.coordinates[pointsLength][0],
+                GeoJSON.features[0].geometry.coordinates[pointsLength][1]
+            ],
+            "type": "Point"
+        }
+    });
+
+    return {
+        "geojson": GeoJSON,
+        "totalDistance": totalDistance,
+        "latitude": lat,
+        "longitude": lng,
+        "zoom": zoom,
+        "elevation": totalElevation
+    };
 }
-

@@ -1,10 +1,11 @@
 import Image from "next/image"
 import Link from "next/link";
 
+// TODO: Fix selection/deletion of route. Exec has to select the route first, then they are able to delete it
 function RouteLayout({ routeinfo, setSelectedRoute, setShowDeletionModal }) {
 
     return (
-        <div className="min-h-16 max-h-32 px-2 flex items-center border-b-2 border-primary-red sm:text-[10px] md:text-[16px] lg:text-[18px] hover:bg-gray-400">
+        <div className="min-h-16 max-h-32 px-2 flex items-center border-b-2 border-primary-red sm:text-[10px] md:text-[16px] lg:text-[18px] hover:bg-gray-400"> 
             <button onClick={() => setSelectedRoute(routeinfo)} className="grid grid-cols-6 content-center place-items-center w-[95%] h-full">
                 <h2 className="col-span-2 place-self-start text-left font-medium">
                     {routeinfo.title}

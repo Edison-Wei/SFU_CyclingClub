@@ -10,22 +10,7 @@ import SlideShow from "@/components/Slideshow";
 import Image from "next/image";
 import Link from "next/link";
 import { parseRoute } from "../components/parseRoute";
-
-const initialRoute = [
-  {
-    difficulty: "",
-    distance: 0,
-    geojson: "",
-    latitude: 49.2790223,
-    longitude: -122.9201949,
-    rid: 0,
-    start_date: "1965-09-09T07:00:00.000Z",
-    start_time: "00:00",
-    end_time: "00:00",
-    title: "",
-    zoom: 11.5
-  }
-]
+import { initialRoute } from "@/components/types/routeTypes";
 
 async function fetchUpcommingRoute() {
   try {
@@ -89,6 +74,7 @@ export default function Home() {
         //   geojson: parsedRoute.geojson,
         //   latitude: parsedRoute.latitude,
         //   longitude: parsedRoute.longitude,
+        //   elevation: parsedRoute.elevation,
         //   zoom: parsedRoute.zoom,
         //   difficulty: route.difficulty,
         //   distance: route.distance,

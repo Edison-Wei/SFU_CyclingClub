@@ -67,8 +67,6 @@ export default function Suggestion() {
             return;
         }
 
-        console.log(email);
-
         try {
             await axios.post("/api/Routes/postSuggestRoute", {
                 created_by: email,
@@ -83,12 +81,18 @@ export default function Suggestion() {
     }
 
     function handleFileInput(e) {
+        // Check to see if a file was selected
+        if(e.target.files.length === 0) {
+            setRouteInformation("");
+            setRouteData(initialRouteData);
+            return;
+        }
         const fileData = new FileReader();
         fileData.readAsText(e.target.files[0], "UTF-8");
         fileData.onload = e => {
-            const [loadedRoute, injection] = e.target.result.split(";");
+            const [loadedRoute, routeInjection] = e.target.result.split(";");
 
-            if (injection)
+            if (routeInjection)
                 setDiscardForm(true);
 
             setRouteInformation(loadedRoute);
@@ -100,8 +104,8 @@ export default function Suggestion() {
     };
 
     function handleRouteText(routeText) {
-        const [loadedRoute, injection] = routeText.split(";");
-        if(injection)
+        const [loadedRoute, routeInjection] = routeText.split(";");
+        if(routeInjection)
             setDiscardForm(true);
 
         setRouteInformation(loadedRoute);
@@ -134,7 +138,7 @@ export default function Suggestion() {
                     {/* To handle unwanted forms */}
                     <div className="hidden">
                         <label className="font-normal">Name</label>
-                        <input type="text" className="bg-white w-[80%] rounded-lg shadow-md" name="name" placeholder="holder..." onChange={() => setDiscardForm(true)}></input>
+                        <input type="text" className="bg-white w-[80%] rounded-lg shadow-md" name="name" placeholder="holder..." onChange={() => setDiscardForm(true)} autoComplete="off"></input>
                     </div>
                 </section>
 
@@ -158,9 +162,7 @@ export default function Suggestion() {
                         <input type="file" accept=".gpx,.geojson" onChange={handleFileInput} className="md:w-1/2 w-full bg-gray-300 border-4 border-gray-300" required></input> {/* To add .json support later */}
                         {routeInformation &&
                         <div className="relative md:h-[40vh] w-[45vh] lg:h-[75vh] lg:w-[90vh] bg-gray-300">
-                            <div className="absolute">
                                 <Map geoData={routeData.geojson} center={[routeData.latitude, routeData.longitude]} zoom={routeData.zoom} id={id++}/> {/* Put label here when file cannot be read and parsed */}
-                            </div>
                         </div>}
                     </div>)}
 
@@ -172,6 +174,7 @@ export default function Suggestion() {
                         </ul>
                         <span className="text-primary-red font-semibold">{errorMessage.routeText}</span>
                         <textarea className="my-3 p-2 w-[70%] max-h-screen h-[40vh] bg-white sm:text-[10px] md:text-[15px] shadow-lg rounded-md" name="routeText"></textarea>
+
                         {/* TODO: Fix route text map view, correctly it keeps refreshing after any changes to email and routeText */}
                         {/* {routeText != ""? 
                         <button type="button" onClick={() => handleRouteText()} className={`py-1 px-3 w-fit text-white rounded-xl bg-primary-red underline`}>Click here and check below to verify the route is correctly processed.</button>
@@ -185,7 +188,7 @@ export default function Suggestion() {
                 <section className="mt-12">
                     <div className="hidden">
                         <label className="font-normal">Name</label>
-                        <input type="text" className="bg-white w-[80%] rounded-lg shadow-md" name="phoneNumber" placeholder="holder..." onChange={() => setDiscardForm(true)}></input>
+                        <input type="text" className="bg-white w-[80%] rounded-lg shadow-md" name="phoneNumber" placeholder="holder..." onChange={() => setDiscardForm(true)} autoComplete="off"></input>
                     </div>
                     <button type="submit" className="py-1 px-3 bg-primary-red rounded-2xl text-white hover:opacity-70 underline">Submit Route</button>
                 </section>
