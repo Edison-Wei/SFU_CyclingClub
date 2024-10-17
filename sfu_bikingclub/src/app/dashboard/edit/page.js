@@ -181,7 +181,7 @@ function EditRoute() {
                         <label className="font-normal">Name</label>
                         <input type="text" className="bg-white w-[80%] rounded-lg shadow-md" name="phoneNumber" placeholder="holder..." onChange={() => setDiscardForm(true)}></input>
                     </div>
-                    <button type="submit" className="py-1 px-3 bg-primary-red rounded-2xl text-white hover:opacity-70 underline">Update Route</button>
+                    <button type="submit" className="py-1 px-3 bg-primary-red rounded-2xl text-white hover:opacity-70 underline">Save Changes Route</button>
                 </section>
 
             </form>

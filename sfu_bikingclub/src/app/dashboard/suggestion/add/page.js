@@ -68,6 +68,7 @@ function AddSuggestionRoute() {
         const date = formData.get("date"); // Date has to be today's date or after (Format of yyyy-mm-dd)
         const startTime = formData.get("startTime"); // In 24 hour format
         const endTime = formData.get("endTime"); // In 24 hour format (Has to be greater than startTime)
+        const description = formData.get("description");
 
         if(discardForm) {
             alert("Sending you back home");
@@ -81,6 +82,7 @@ function AddSuggestionRoute() {
                 sid: params,
                 title: title,
                 difficulty: difficulty,
+                description: description,
                 gpx: routeInformation,
                 distance: routeSuggestion.distance,
                 start_Date: date,
@@ -88,8 +90,8 @@ function AddSuggestionRoute() {
                 end_Time: endTime,
             });
 
-            alert((await res).data.result + "\nSending you back to the Member Suggested Routes");
-            router.push("/dashboard/member");
+            alert((await res).data.result + "\nSending you back to the Route Suggestions");
+            router.push("/dashboard/suggestion");
         } catch (error) {
             alert(error.response.data.error);
         }
@@ -142,6 +144,12 @@ function AddSuggestionRoute() {
                         <input type="time" className="w-[80%] bg-white rounded-lg shadow-md" name="endTime" onChange={(e) => handleTimeInput(e)} required></input>
                     </div>
                 </section>
+
+                <section className="flex flex-col gap-1 md:max-h-64 max-h-32">
+                    <label className="font-medium">Ride Description: (optional)</label>
+                    <textarea className="block h-52 w-[75%] px-1 py-2 rounded-lg shadow-md resize-none" name="description" placeholder="Inform rides of dangers, preparations, etc ...."></textarea>
+                </section>
+
                 <section className="w-full flex flex-col gap-3">
                     <h1 className="font-medium">Route:</h1>
                     {routeInformation && <Map geoData={routeSuggestion.geojson} center={[routeSuggestion.latitude, routeSuggestion.longitude]} zoom={routeSuggestion.zoom} id={0}/>} {/* Put label here when file cannot be read and parsed */}

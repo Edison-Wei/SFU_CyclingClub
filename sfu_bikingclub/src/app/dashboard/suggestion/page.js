@@ -24,12 +24,12 @@ async function fetchSuggestionRoutes() {
 
     return res.data.results;
   } catch (error) {
-    console.error("Error fetching Member Routes: " + error)
-    return ["Member Routes not found"];
+    console.error("Error fetching Route Suggestions: " + error)
+    return ["Route Suggestions not found"];
   }
 }
 
-export default function MemberSubmissions() {
+export default function SuggestedRouteSubmissions() {
   const [routeSuggestions, setRouteSuggestions] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState(initialSelectedRoute);
   const [showDeletionModal, setShowDeletionModal] = useState(false);
@@ -102,7 +102,7 @@ export default function MemberSubmissions() {
               key={routeinfo.sid}/>
             })
             :
-              <div className="p-4 text-center">No Route Suggestions from Members</div>}
+              <div className="p-4 text-center">No Route Suggestions</div>}
           </div>
 
         </div>
