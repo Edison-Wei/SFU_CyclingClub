@@ -23,7 +23,7 @@ async function fetchUpcommingRoute() {
     return errorRes;
   }
 }
-
+// **TODO: Add the description from mysql db
 function DisplayInformation({ routeInfo }) {
   const startdate = new Date(routeInfo.start_date);
 
@@ -84,6 +84,7 @@ export default function Home() {
         // }
       });
       setRoutes(routeinfo);
+      
     }
   );
   }, []);

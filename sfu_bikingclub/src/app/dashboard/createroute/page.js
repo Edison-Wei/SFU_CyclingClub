@@ -50,9 +50,6 @@ export default function CreateRoute() {
         const startTime = formData.get("startTime"); // In 24 hour format
         const endTime = formData.get("endTime"); // In 24 hour format (Has to be greater than startTime)
         const description = formData.get("description");
-        console.log(description);
-
-        return;
 
 
         if(discardForm) {

@@ -57,9 +57,6 @@ function RouteData({ geoJsonRef, geoData }) {
  */
 export default function Map({ geoData, center, zoom }) {
   const geoJsonRef = useRef();
-  console.log(geoData);
-  console.log(center);
-  console.log(zoom);
 
   return (
     <div className="md:h-[40vh] w-[45vh] lg:h-[75vh] lg:w-[80vh] md:w-0-[40vh]">

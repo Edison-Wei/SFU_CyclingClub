@@ -70,7 +70,8 @@ export default function Suggestion() {
         try {
             await axios.post("/api/Routes/postSuggestRoute", {
                 created_by: email,
-                gpx: (routeRadio? routeText.split(";")[0]: routeInformation),
+                // gpx: (routeRadio? routeText.split(";")[0]: routeInformation),
+                gpx: JSON.stringify(routeData.geojson),
                 distance: routeData.distance
             });
 

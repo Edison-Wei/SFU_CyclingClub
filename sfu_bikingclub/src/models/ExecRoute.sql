@@ -1,4 +1,4 @@
--- The MySQL schema being used (Please modify this if making adjustments on database)
+-- The MySQL schema being used (Please modify this if making adjustments on the database)
 -- Can put AUTO INCREMENT in rid (to increase speed)
 CREATE TABLE ExecRoutes (
     rid INTEGER UNSIGNED PRIMARY KEY NOT NULL,
@@ -26,5 +26,3 @@ CREATE VIEW upcomingRide AS
 
 -- Not 100% if these changes are applied to the table
 -- ALTER TABLE `ExecRoutes` CHANGE `distance` `distance` DECIMAL(8, 2) NOT NULL;
-
--- ALTER TABLE `ExecRoutes` CHANGE `rid` `rid`INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL; (Not applying)

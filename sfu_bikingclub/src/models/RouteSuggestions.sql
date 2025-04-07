@@ -1,4 +1,4 @@
--- The MySQL schema being used (Please modify this if making adjustments on database)
+-- The MySQL schema being used (Please modify this if making adjustments on the database)
 CREATE TABLE RouteSuggestions (
     sid INTEGER UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
     created_by VARCHAR(255) NOT NULL,
