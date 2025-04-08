@@ -28,7 +28,8 @@ export async function GET(req, res) {
                 continue
             }
             for (const [lng, lat, elev] of feature.geometry.coordinates) {
-                geojsonCoordinates.push([lng, lat, elev])
+                const elevNotNULL = (elev != null) ? elev : 0.01
+                geojsonCoordinates.push([lng, lat, elevNotNULL])
             }
         }
 
@@ -48,7 +49,6 @@ export async function POST(req, res) {
     }
 
     try {
-        
         console.log(req)
         return NextResponse.json({ routeProcessed: true }, { status: 201 })
     } catch(error) {
