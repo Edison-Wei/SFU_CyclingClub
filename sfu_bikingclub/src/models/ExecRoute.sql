@@ -19,10 +19,9 @@ CREATE TABLE ExecRoutes (
 CREATE VIEW upcomingRide AS
     SELECT *
     FROM ExecRoutes
-    WHERE start_date > CURRENT_DATE()
+    WHERE start_date >= CURRENT_DATE()
         AND difficulty IN ('Beginner', 'Moderate', 'Intermediate')
     GROUP BY difficulty
     ORDER BY start_date;
 
--- Not 100% if these changes are applied to the table
--- ALTER TABLE `ExecRoutes` CHANGE `distance` `distance` DECIMAL(8, 2) NOT NULL;
+-- TODO: Create a SQL database to store all routes with rid, gpx/geojson
