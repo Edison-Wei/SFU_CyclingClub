@@ -26,6 +26,7 @@ const SlideShow = () => {
                     src={images[currentImageIndex]}
                     alt={`Slide ${currentImageIndex + 1}`}
                     className="w-full h-full object-cover"
+                    loading='lazy'
                 />
                 <button
                     onClick={prevSlide}

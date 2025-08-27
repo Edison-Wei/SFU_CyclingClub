@@ -3,6 +3,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { connectMongoDB } from "../../../../lib/mongodb";
 import User from "../../../../models/user";
 import bcrypt from 'bcryptjs';
+import mysql from 'mysql2/promise';
+import connectionCredentials from "@/app/utils/dbConnection";
 
 export const authOptions = {
     providers: [
@@ -14,19 +16,36 @@ export const authOptions = {
                 const {email, password} = credentials;
 
                 try {
-                    await connectMongoDB();
+                    const queryUser = `SELECT uid, fullname as name, role, email, CONVERT(password, CHAR) password FROM Account.Users WHERE email = ?`;
 
-                    const user = await User.findOne({email});
-                    if(!user) {
+                    const connection = await mysql.createConnection(connectionCredentials("account"));
+                    const [resultsUser] = await connection.execute(queryUser, [email]);
+                    connection.end();
+
+                    if (resultsUser[0].password == null)
                         return null;
-                    }
-
+                    const user = resultsUser[0]
+                    
                     const passwordMatch = await bcrypt.compare(password, user.password);
-                    if(!passwordMatch) {
-                        return null
-                    }
+                    if (!passwordMatch)
+                        return null;
 
-                    return user;
+                    return user
+
+
+                    // await connectMongoDB();
+
+                    // const user = await User.findOne({email});
+                    // if(!user) {
+                    //     return null;
+                    // }
+
+                    // const passwordMatch = await bcrypt.compare(password, user.password);
+                    // if(!passwordMatch) {
+                    //     return null
+                    // }
+
+                    // return user;
 
                 } catch (error) {
                     console.log("Error: ", error);
@@ -35,6 +54,24 @@ export const authOptions = {
             }
         })
     ],
+    callbacks: {
+        async jwt({token, user}) {
+            if (user) {
+                token.uid = user.uid
+                token.name = user.name
+                token.role = user.role
+                token.email = user.email
+            }
+            return token;
+        },
+        async session({session, token}) {
+            if (token) {
+                session.user.uid = token.uid
+                session.user.role = token.role
+            }
+            return session
+        }
+    },
     session: {
         strategy: "jwt",
     },

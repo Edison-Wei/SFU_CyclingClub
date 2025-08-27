@@ -50,7 +50,7 @@ export default function LoginForm() {
                         type="password"
                         placeholder="Password"
                     />
-                    <button className="bg-[#890B29] text-white text-sm font-bold cursor-pointer px-6 py-2">LOGIN</button>
+                    <button className="bg-[#890B29] text-white text-sm font-bold cursor-pointer px-6 py-2 hover:bg-red-600 transition">LOGIN</button>
 
                     {error && (
                         <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">

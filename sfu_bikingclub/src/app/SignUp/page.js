@@ -15,7 +15,7 @@ export default async function SignUp() {
     return (
         <div className="w-full h-full py-6">
             <Header />
-            <SignUpForm />
+            {/* <SignUpForm /> */}
         </div>
     );
 }

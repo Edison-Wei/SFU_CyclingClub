@@ -15,13 +15,16 @@ export default async function handler(req, res) {
         const queryInsertRoute = "INSERT INTO CyclingRoutes.ExecRoutes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_DATE()) ";
 
         // Grab rid (because AUTO_INCREMENT is not enabled on MySQL)
-        const [ rid ] = await connection.execute(queryrid);
-        rid[0].rid += 1;
+        await connection.beginTransaction()
+        
+        const [ resultrid ] = await connection.query(queryrid);
+        const rid = resultrid[0].uid == null ? 0 : (resultrid[0].rid + 1)
 
-        const values = [rid[0].rid, title, description, gpx, difficulty, distance, start_Date, start_Time, end_Time];
+        const values = [rid, title, description, gpx, difficulty, distance, start_Date, start_Time, end_Time];
 
-        await connection.execute(queryInsertRoute, values);
+        await connection.query(queryInsertRoute, values);
 
+        connection.commit()
         connection.end();
 
         res.status(200).json({ result: "Route has been successfully Added"});

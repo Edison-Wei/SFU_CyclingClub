@@ -26,7 +26,7 @@ export default function UserInfo() {
             </div>
             <button
                 onClick={handleSignOut}
-                className="bg-[#890B29] text-white text-sm font-bold cursor-pointer px-6 py-2 rounded-lg">
+                className="bg-[#890B29] text-white text-sm font-bold cursor-pointer px-6 py-2 rounded-lg hover:bg-primary-red transition">
                 Log Out
             </button>
         </div>

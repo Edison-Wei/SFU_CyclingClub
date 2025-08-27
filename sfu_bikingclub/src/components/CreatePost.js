@@ -1,14 +1,11 @@
 'use client';
 
 import { useRouter } from "next/navigation";
-import { useState } from 'react';
 import { useSession } from "next-auth/react";
-import Header from "@/components/Header";
-import axios from "axios";
 
 export default function CreatePost() {
 
-    const { data: session } = useSession();
+    const { data: session } = useSession(); 
     const router = useRouter();
 
     const handleSubmit = async (e) => { // e is data grabbed within the form tag
@@ -23,7 +20,7 @@ export default function CreatePost() {
                     title: e.get("title"),
                     desc: e.get("desc"),
                     category: e.get("category"),
-                    authorId: session?.user?.id,
+                    authorUid: session?.user?.uid,
                     authorName: session?.user?.name,
                     image: e.get("image"),
                 }),
@@ -45,19 +42,18 @@ export default function CreatePost() {
 
     return (
         <div>
-            <Header />
             <form action={handleSubmit}>
-                <div className="pt-8">
+                <div className="pt-2">
                     <hr className="my-2 border-gray-400 px-0 " />
-                    <h1 className="text-lg px-4">
+                    <h1 className="text-lg px-16">
                         Create Post
                     </h1>
                     <hr className="my-2 border-gray-400 px-0" />
                 </div>
-                <div className="flex justify-center items-center h-full pt-40 pb-80">
+                <div className="flex justify-center items-center h-full pt-28 pb-80">
                     <div className="grid grid-cols-1 gap-6 w-full max-w-lg">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Title</label>
+                            <label className="block md:text-md font-medium text-gray-700">Title</label>
                             <input
                                 type="text"
                                 name="title"
@@ -67,7 +63,7 @@ export default function CreatePost() {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Description</label>
+                            <label className="block md:text-md font-medium text-gray-700">Description</label>
                             <textarea
                                 name="desc"
                                 placeholder="Add a detailed description"
@@ -76,7 +72,10 @@ export default function CreatePost() {
                             ></textarea>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Image (Optional)</label>
+                            {/* TODO: Allow input of images on device rather than url
+                                Compress the images to be shown and then saved once complete 
+                                https://stackoverflow.com/questions/14672746/how-to-compress-an-image-via-javascript-in-the-browser*/}
+                            <label className="block md:text-md font-medium text-gray-700">Image (Optional)</label>
                             <input
                                 type="text"
                                 name="image"
@@ -85,7 +84,7 @@ export default function CreatePost() {
                             />
                         </div>
                         <div className="pt-1 w-full">
-                            <label className="block text-sm font-medium text-gray-700">Category</label>
+                            <label className="block md:text-md font-medium text-gray-700">Category</label>
                             <select
                                 name="category"
                                 className="rounded-lg border border-gray-300 px-4 py-2 w-full"
@@ -100,7 +99,7 @@ export default function CreatePost() {
                             </select>
                         </div>
                         <button
-                            className="rounded-lg bg-primary-red text-white px-4 py-2"
+                            className="rounded-lg bg-primary-red text-white px-4 py-2 hover:bg-red-800 hover:shadow-md transition"
                             type="submit"
                         >
                             Post

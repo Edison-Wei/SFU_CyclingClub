@@ -65,7 +65,7 @@ export default function SignUpForm() {
         }
     };
 
-    console.log("Name: ", name);
+    // console.log("Name: ", name);
 
     return (
         <div className="grid place-items-center h-screen">

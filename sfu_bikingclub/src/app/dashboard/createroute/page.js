@@ -30,10 +30,8 @@ export default function CreateRoute() {
 
     const [time, setTime] = useState(initialTimeValues);
     const [routeRadio, setRouteRadio] = useState(false);
-    const [routeDescription, setRouteDescription] = useState("");
     const Map = dynamic(() => import('@/app/dashboard/component/Map'), { ssr: false, loading: () => <p>Loading Map and Routes</p> });
 
-    console.log(routeDescription);
 
 
     const router = useRouter();
@@ -136,7 +134,7 @@ export default function CreateRoute() {
 
                 <section className="flex flex-col gap-1 md:max-h-64 max-h-32">
                     <label className="font-medium">Ride Description:</label>
-                    <textarea className="block h-52 w-[75%] px-1 py-2 rounded-lg shadow-md resize-none" name="description" placeholder="Inform rides of dangers, preparations, etc ...."></textarea>
+                    <textarea className="block h-52 w-[75%] px-1 py-2 rounded-lg shadow-md resize-none" name="description" placeholder="Inform riders of dangers, preparations, etc ...."></textarea>
                 </section>
 
                 <section className="w-full flex flex-col gap-3">

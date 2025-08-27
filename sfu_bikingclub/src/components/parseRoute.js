@@ -7,10 +7,10 @@ export function parseRoute(route) {
         return {
             geojson: "",
             distance: 0,
-            latitude: 49.2790223,
-            longitude: -122.9201949,
+            latitude: 49.2327007,
+            longitude: -123.0514226,
             elevation: 0,
-            zoom: 11.5
+            zoom: 11
         }
     }
 

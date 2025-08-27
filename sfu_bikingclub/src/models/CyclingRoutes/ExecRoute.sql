@@ -23,5 +23,3 @@ CREATE VIEW upcomingRide AS
         AND difficulty IN ('Beginner', 'Moderate', 'Intermediate')
     GROUP BY difficulty
     ORDER BY start_date;
-
--- TODO: Create a SQL database to store all routes with rid, gpx/geojson
