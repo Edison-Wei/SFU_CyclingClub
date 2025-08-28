@@ -53,7 +53,7 @@ export default function Blog() {
                         ))}
                     </div>
                 )}
-                {session.role == 'Executive'? (
+                {session?.role == 'Executive'? (
                     <div className="sticky bottom-0 flex justify-center w-full">
                         <NewPost />
                     </div>
@@ -84,6 +84,12 @@ export default function Blog() {
                         ))}
                     </div>
                 )}
+            </div>
+            {/* TODO: Allow blog to populate only 16 blog posts then move to NEXT page 
+                    to populate the next 16 posts
+                    - From most recent to oldest post */}
+            <div>
+                
             </div>
         </div>
     );

@@ -72,7 +72,6 @@ export default function Executives() {
 
     useEffect(() => {
         fetchExecutivesandSponsors().then( res => {
-            console.log(res)
             setExecutivesandSponsor(res.ExecutivesNSponsors);
             setimage(res.Images);
         }).finally (
