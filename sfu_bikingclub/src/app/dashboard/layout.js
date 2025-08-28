@@ -7,10 +7,9 @@ import Header from "@/components/Header";
 
 export default function RootLayout({ children }) {
   const { data: session } = useSession();
-  let allowedAccess = true
-  console.log(session);
+  let allowedAccess = false
   
-  if (session?.user.role == 'Executive') {
+  if (session?.user?.role == 'Executive') {
     allowedAccess = true
   }
 

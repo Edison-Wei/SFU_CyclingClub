@@ -52,7 +52,7 @@ export async function POST(req) {
         if (!image || image == "" )
             postImage = null;
 
-        await connection.query(queryPost, [pid, title, desc, category, authorUid, authorName, postImage]);
+        await connection.query(queryInsertPost, [pid, title, desc, category, authorUid, authorName, postImage]);
         connection.commit();
         connection.end();
 

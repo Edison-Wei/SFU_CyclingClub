@@ -11,14 +11,14 @@ export default async function handler(req, res) {
 
         const connection = await mysql.createConnection(connectionCredentials("route"));
 
-        const queryrid = "SELECT MAX(rid) as rid FROM CyclingRoutes.ExecRoutes";
+        const queryrid = "SELECT MAX(rid) as rid FROM CyclingRoutes.ExecRoutes"; //WITH maxrid AS (SELECT MAX(rid)+1 as rid FROM `ExecRoutes`)
         const queryInsertRoute = "INSERT INTO CyclingRoutes.ExecRoutes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_DATE()) ";
 
         // Grab rid (because AUTO_INCREMENT is not enabled on MySQL)
         await connection.beginTransaction()
         
         const [ resultrid ] = await connection.query(queryrid);
-        const rid = resultrid[0].uid == null ? 0 : (resultrid[0].rid + 1)
+        const rid = resultrid[0].rid == null ? 0 : (resultrid[0].rid + 1)
 
         const values = [rid, title, description, gpx, difficulty, distance, start_Date, start_Time, end_Time];
 
