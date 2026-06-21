@@ -1,0 +1,76 @@
+import { PostType } from "@/types/PostType"
+
+export const samplePosts: PostType[] = [
+    {
+        pid: 0,
+        _id: 0,
+        image: "/image2.jpg",
+        publish: true,
+        title: "Something Interesting Lorem ipsum dolor sit amet, consectetur adipiscing ",
+        content: "Cooler Things happening",
+        authorName: "ME",
+        datePosted: new Date("1965-09-09T07:00:00.000Z"),
+    },
+    {
+        pid: 1,
+        _id: 0,
+        image: "",
+        publish: false,
+        title: "Cool Bike riders only",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis lorem, condimentum quis interdum a, feugiat eget tellus. Aenean sit amet augue sodales, mattis dui eget, tincidunt velit. Vestibulum nec vulputate leo, sit amet tincidunt justo. Aenean lacinia neque ipsum, eget sollicitudin purus elementum nec. Donec lobortis purus eros, eu efficitur enim ultricies nec. Maecenas at tortor orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut viverra lorem. Duis non congue massa. Proin nec felis libero. Sed vitae tempus dui. Pellentesque at mi feugiat, rhoncus dui id, scelerisque nibh. Donec quis pellentesque purus. Donec finibus felis quis ultrices finibus. Praesent non metus dictum, lobortis metus ut, pellentesque ex.",
+        authorName: "ME",
+        datePosted: new Date("1965-09-09T07:00:00.000Z"),
+    },
+    {
+        pid: 2,
+        _id: 0,
+        image: "",
+        publish: false,
+        title: "Order of Interest",
+        content: "Cooler Things happening",
+        authorName: "ME",
+        datePosted: new Date("1965-09-09T07:00:00.000Z"),
+    },
+    {
+        pid: 3,
+        _id: 0,
+        image: "/image2.jpg",
+        publish: true,
+        title: "Other post Interesting",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis lorem, condimentum quis interdum a, feugiat eget tellus. Aenean sit amet augue sodales, mattis dui eget, tincidunt velit. Vestibulum nec vulputate leo, sit amet tincidunt justo. Aenean lacinia neque ipsum, eget sollicitudin purus elementum nec. Donec lobortis purus eros, eu efficitur enim ultricies nec. Maecenas at tortor orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut viverra lorem. Duis non congue massa. Proin nec felis libero. Sed vitae tempus dui. Pellentesque at mi feugiat, rhoncus dui id, scelerisque nibh. Donec quis pellentesque purus. Donec finibus felis quis ultrices finibus. Praesent non metus dictum, lobortis metus ut, pellentesque ex.",
+        authorName: "ME",
+        datePosted: new Date("1965-09-09T07:00:00.000Z"),
+    },
+    {
+        pid: 4,
+        _id: 0,
+        image: "",
+        publish: false,
+        title: "Other post Interesting",
+        content: "Cooler Things happening",
+        authorName: "ME",
+        datePosted: new Date("1965-09-09T07:00:00.000Z"),
+    },
+    {
+        pid: 5,
+        _id: 0,
+        image: "",
+        publish: false,
+        title: "Other post Interesting",
+        content: "Cooler Things happening",
+        authorName: "ME",
+        datePosted: new Date("1965-09-09T07:00:00.000Z"),
+    },
+    
+]
+
+export const DEFAULT_POST: PostType = {
+    pid: 0,
+    _id: 0,
+    publish: false,
+    image: "",
+    title: "Something Interesting",
+    content: "Cooler Things happening",
+    authorName: "ME",
+    datePosted: new Date("1965-09-09T07:00:00.000Z"),
+}
